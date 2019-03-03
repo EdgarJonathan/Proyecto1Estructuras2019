@@ -20,6 +20,11 @@ nodoBst::nodoBst(catedratico ing,nodoBst* izq,nodoBst* der)
     this->der = der;
 }
 
+void nodoBst::imprimir()
+{
+    std::cout<<"codigo: "<<ing.id<<", Ing: "<<ing.nombre<<std::endl;
+
+}
 
 /*****************************************************************************
 *************************** arbol binario ************************************
@@ -31,7 +36,6 @@ bst::bst()
 {
     raiz = nullptr;
 }
-
 
 bst::bst(nodoBst* r)
 {
@@ -48,58 +52,36 @@ nodoBst * bst::getRaiz()
     return raiz;
 }
 
-nodoBst bst::raizArbol()
-{
-    if(raiz)
-    return *raiz;
-    else
-    throw " arbol vacio";
-}
 
-bool bst::esVacio()
+bool bst::estavacio()
 {
     return raiz == nullptr;
 }
 
 
-nodoBst * bst::hijoIzdo()
+catedratico bst::buscar(std::string codigo)
 {
-    if(raiz)
-    return raiz->getder();
-    else
-    throw " arbol vacio";
+    nodoBst* nodo = buscar(raiz, codigo);
+
+   if(nodo == nullptr)
+   {
+    return nodo->getValor();
+   }else {
+       return {"NULL","NULL"};
+   }
+
 }
 
-
-nodoBst *bst::hijoDcho()
-{
-    if(raiz)
-    return raiz->getder();
-    else
-    throw " arbol vacio";
-}
-
-nodoBst* bst::nuevoArbol(nodoBst* izq, catedratico dato, nodoBst* der)
-{
-    return new nodoBst( dato,izq, der);
-}
-
-
-catedratico bst::buscar(catedratico ing)
-{
-    return buscar(raiz, ing)->valorNodo();
-}
-
- nodoBst* bst::buscar(nodoBst* raiz, catedratico ing)
+ nodoBst* bst::buscar(nodoBst* raiz, std::string codigo)
 {
     if (raiz == nullptr)
     return nullptr;
-    else if (ing.id == raiz->valorNodo().id)
+    else if (codigo == raiz->getValor().id)
     return raiz;
-    else if (ing.id < raiz->valorNodo().id)
-    return buscar(raiz->getizq(), ing);
+    else if (codigo < raiz->getValor().id)
+    return buscar(raiz->getizq(), codigo);
     else
-    return buscar (raiz->getder(), ing);
+    return buscar (raiz->getder(), codigo);
 }
 
 
@@ -107,31 +89,86 @@ catedratico bst::buscar(catedratico ing)
 
  void bst::insertar (catedratico valor)
  {
-    raiz = insertar(raiz, valor);
+    this->raiz = insertar(this->raiz, valor);
  }
 
 
  nodoBst* bst::insertar(nodoBst* raiz, catedratico dato)
  {
-    if (raiz == nullptr)
-     raiz = new nodoBst(dato);
-     else if (dato.id < raiz->valorNodo().id)
+    if (raiz == nullptr){
+
+        raiz = new nodoBst(dato);
+
+    }else if (dato.id < raiz->getValor().id)
     {
       nodoBst *iz;
-
       iz = insertar(raiz->getizq(), dato);
       raiz->setizq(iz);
     }
-    else if (dato.id > raiz->valorNodo().id)
+    else if (dato.id > raiz->getValor().id)
+    {
+        nodoBst *dr;
+        dr = insertar(raiz->getder(), dato);
+        raiz->setder(dr);
+     }
+    else{
 
+        std::cout<<"---Nodo Duplicado---"<<std::endl;
+        std::cout<<"codigo: "<<raiz->getValor().id;
+        std::cout<<"  catedratico: "<<raiz->getValor().nombre<<"\n\n";
+
+    }
+   return raiz;
+ }
+
+
+ void bst::preorden()
  {
- nodoBst *dr;
- dr = insertar(raiz->getder(), dato);
- raiz->setder(dr);
+    std::cout <<"\n";
+    std::cout <<"---------preorden----------- \n";
+    preorden(this->raiz);
  }
- else
- throw "Nodo duplicado"; // tratamiento de repetición
- return raiz;
+
+
+
+ void bst::preorden(nodoBst *r)
+ {
+     if (r != nullptr)
+    {
+        r->imprimir();
+        preorden (r->getizq());
+        preorden (r->getder());
+     }
  }
+
+ void bst::inorden()
+ {
+     std::cout <<"\n";
+     std::cout <<"----------inorden------------ \n";
+     inorden(this->raiz);
+ }
+
+ void bst::inorden(nodoBst* r)
+ {
+     if(r!= nullptr)
+     {
+        inorden(r->getizq());
+        r->imprimir();
+        inorden(r->getder());
+     }
+ }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

@@ -1,6 +1,8 @@
 #ifndef BST_H
 #define BST_H
+
 #include<string>
+#include <iostream>
 
 /*****************************************************************************
 *************************** Nodo bst       ************************************
@@ -29,14 +31,15 @@ class nodoBst
 
 
     // operaciones de acceso
-    catedratico valorNodo(){ return ing; }
+    catedratico getValor(){ return ing; }
     nodoBst* getizq(){ return izq; }
     nodoBst* getder(){ return der; }
     // operaciones de modificación
-    void nuevoValor(catedratico n){ this->ing = n; }
+    void setValor(catedratico n){ this->ing = n; }
     void setizq(nodoBst* n){ izq = n; }
     void setder(nodoBst* n){ der = n; }
 
+    void imprimir();
 
 };
 
@@ -49,33 +52,25 @@ class nodoBst
 
 class bst
 {
-
     protected:
      nodoBst* raiz;
     public:
-
     bst();
     bst(nodoBst *r);
     void setRaiz( nodoBst *r);
     nodoBst* getRaiz();
-    nodoBst raizArbol();
-    bool esVacio();
-    nodoBst * hijoIzdo();
+    bool estavacio();
 
-    nodoBst* hijoDcho();
-    nodoBst* nuevoArbol(nodoBst* izq, catedratico ing, nodoBst* der);
-
-
-    //metodos buscar
-    catedratico buscar(catedratico ing);
-    nodoBst* buscar(nodoBst* raiz, catedratico ing);
-
-
-
-
+    void preorden();
+    void inorden();
     void insertar (catedratico valor);
-    nodoBst* insertar(nodoBst* raiz, catedratico dato);
+    catedratico buscar(std::string codigo);
 
+    private:
+    void preorden(nodoBst *r);
+    void inorden(nodoBst *r);
+    nodoBst* insertar(nodoBst* raiz, catedratico dato);
+    nodoBst* buscar(nodoBst* raiz, std::string codigo);
 
 };
 
