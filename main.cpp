@@ -16,10 +16,14 @@ int main()
     miarbol.insertar({"zoan","ing1"});
     miarbol.insertar({"ana","ing1"});
 
+    for (int i=0;i<10;i++) {
+
+        miarbol.insertar({"AX"+std::to_string(i),"ing1"});
+    }
 
     miarbol.preorden();
-
     miarbol.inorden();
+    miarbol.graficar();
 
 
 

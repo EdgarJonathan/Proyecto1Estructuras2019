@@ -126,7 +126,15 @@ catedratico bst::buscar(std::string codigo)
  {
     std::cout <<"\n";
     std::cout <<"---------preorden----------- \n";
-    preorden(this->raiz);
+
+    if(raiz!=nullptr)
+    {
+        preorden(this->raiz);
+    }else
+    {
+        std::cout <<"arbol vacio\n";
+    }
+
  }
 
 
@@ -145,7 +153,15 @@ catedratico bst::buscar(std::string codigo)
  {
      std::cout <<"\n";
      std::cout <<"----------inorden------------ \n";
-     inorden(this->raiz);
+
+
+     if(raiz!=nullptr)
+     {
+        inorden(this->raiz);
+     }else
+     {
+         std::cout <<"arbol vacio\n";
+     }
  }
 
  void bst::inorden(nodoBst* r)
@@ -158,7 +174,132 @@ catedratico bst::buscar(std::string codigo)
      }
  }
 
+ void bst::postorden()
+ {
+     std::cout <<"\n";
+     std::cout <<"----------postrden------------ \n";
+     if(raiz!=nullptr)
+     {
+        postorden(this->raiz);
+     }else
+     {
+         std::cout <<"arbol vacio\n";
+     }
 
+ }
+
+ void bst::postorden(nodoBst* r)
+ {
+
+     if(r!= nullptr)
+     {
+        inorden(r->getizq());
+        inorden(r->getder());
+        r->imprimir();
+     }
+ }
+
+
+
+ void bst::graficar()
+ {
+     std::string nombre = "arbolBst";
+     encabezado(nombre);
+     cuerpo(nombre);
+     pie(nombre);
+
+     //especificar el nomabre en los metodos system
+     system("dot -Tsvg -O arbolBst.dot");
+     system("xdg-open arbolBst.dot.svg");
+ }
+
+ void bst::encabezado(std::string nombre)
+ {
+     std::ofstream archivo;
+     archivo.open(nombre+".dot",std::ios::out);//abriendo el archivo
+     if(archivo.fail()){ std::cout<<"No se pudo crear el archivo"; exit(1);}
+
+         archivo<<"digraph g "<<std::endl;
+         archivo<<"{\n"<<std::endl;
+         archivo<<"node[shape=record, height=.1, color=turquoise4, fillcolor=green,style=filled ];"<<std::endl;
+         archivo<<"edge[color=tomato];"<<std::endl;
+
+     archivo.close();//cerrar el archivo
+
+ }
+ void bst::cuerpo(std::string nombre)
+ {
+     std::ofstream archivo;
+     archivo.open(nombre+".dot",std::ios::app);//abrimos el archivo en modo anadir
+     if(archivo.fail()){ std::cout<<"No se pudo crear el archivo"; exit(1);}
+
+       std::string cuerpo = graficarPreorden();
+        archivo<<cuerpo<<std::endl;
+
+      archivo.close();//cerrar el archivo
+
+ }
+ void bst::pie(std::string nombre)
+ {
+     std::ofstream archivo;
+     archivo.open(nombre+".dot",std::ios::app);//abrimos el archivo en modo anadir
+     if(archivo.fail()){std::cout<<"No se pudo crear el archivo"; exit(1);}
+
+         archivo<<"}"<<std::endl;
+         archivo.close();//cerrar el archivo
+ }
+
+
+ std::string bst::graficarPreorden()
+ {
+     std::string result = "node20[label = \"<f0> | <f1> Arbol Vacio | <f2>\"]";
+     if(this->raiz!=nullptr)
+     {
+        result = graficarPreorden(this->raiz);
+     }
+
+    return result;
+ }
+ std::string bst::graficarPreorden(nodoBst* raiz)
+ {
+    std::string result = "";
+    if(raiz != nullptr)
+    {
+        std::string temp = "";
+        std::string puntero="";
+        std::string cod = raiz->getValor().id;
+        std::string nom = raiz->getValor().nombre;
+
+        if((raiz->getder()==nullptr)&&(raiz->getizq() ==nullptr))
+        {
+           result ="node"+cod+"[label =\"<f0> | <f1> cod: "+cod+"\\nnombre: "+nom+" | <f2>\"]\n";
+        }
+
+
+        if(raiz->getizq()!=nullptr)
+        {
+
+            temp =graficarPreorden(raiz->getizq());
+            result = temp+"node"+cod+"[label =\"<f0> | <f1> cod: "+cod+"\\nnombre: "+nom+" | <f2>\"]\n\n";
+            puntero = "\"node"+cod+"\":f0-> \"node"+raiz->getizq()->getValor().id+"\":f1\n";
+            result = result+puntero;
+
+        }
+
+        if(raiz->getder()!=nullptr)
+        {
+
+             temp =graficarPreorden(raiz->getder());
+             result = result+temp+"node"+cod+"[label =\"<f0> | <f1> cod: "+cod+"\\nnombre: "+nom+" | <f2>\"]\n\n";
+             puntero = "\"node"+cod+"\":f2-> \"node"+raiz->getder()->getValor().id+"\":f1\n";
+             result = result+puntero;
+
+        }
+    }
+
+
+    return result;
+ }
 
 
 
