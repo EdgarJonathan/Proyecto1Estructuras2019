@@ -5,8 +5,10 @@ CONFIG -= qt
 
 SOURCES += \
         main.cpp \
-    bst.cpp
+    bst.cpp \
+    csv.cpp
 
 HEADERS += \
     bst.h \
-    bst.h
+    bst.h \
+    csv.h

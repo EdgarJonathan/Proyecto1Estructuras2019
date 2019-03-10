@@ -97,7 +97,7 @@ catedratico bst::buscar(std::string codigo)
  {
     if (raiz == nullptr){
 
-        raiz = new nodoBst(dato);
+void insertar(std::list<catedratico>);        raiz = new nodoBst(dato);
 
     }else if (dato.id < raiz->getValor().id)
     {
@@ -177,7 +177,7 @@ catedratico bst::buscar(std::string codigo)
  void bst::postorden()
  {
      std::cout <<"\n";
-     std::cout <<"----------postrden------------ \n";
+     std::cout <<"----------postorden------------ \n";
      if(raiz!=nullptr)
      {
         postorden(this->raiz);
@@ -204,16 +204,14 @@ catedratico bst::buscar(std::string codigo)
  void bst::graficar()
  {
      std::string nombre = "arbolBst";
-     encabezado(nombre);
-     cuerpo(nombre);
-     pie(nombre);
+     textoDot(nombre);
 
      //especificar el nomabre en los metodos system
      system("dot -Tsvg -O arbolBst.dot");
      system("xdg-open arbolBst.dot.svg");
  }
 
- void bst::encabezado(std::string nombre)
+ void bst::textoDot(std::string nombre)
  {
      std::ofstream archivo;
      archivo.open(nombre+".dot",std::ios::out);//abriendo el archivo
@@ -224,85 +222,57 @@ catedratico bst::buscar(std::string codigo)
          archivo<<"node[shape=record, height=.1, color=turquoise4, fillcolor=green,style=filled ];"<<std::endl;
          archivo<<"edge[color=tomato];"<<std::endl;
 
+         graficarPreorden();
+         archivo<<txtgrafica<<std::endl;
+
+         archivo<<"}"<<std::endl;
+
      archivo.close();//cerrar el archivo
 
  }
- void bst::cuerpo(std::string nombre)
+
+
+ void bst::graficarPreorden()
  {
-     std::ofstream archivo;
-     archivo.open(nombre+".dot",std::ios::app);//abrimos el archivo en modo anadir
-     if(archivo.fail()){ std::cout<<"No se pudo crear el archivo"; exit(1);}
 
-       std::string cuerpo = graficarPreorden();
-        archivo<<cuerpo<<std::endl;
-
-      archivo.close();//cerrar el archivo
-
- }
- void bst::pie(std::string nombre)
- {
-     std::ofstream archivo;
-     archivo.open(nombre+".dot",std::ios::app);//abrimos el archivo en modo anadir
-     if(archivo.fail()){std::cout<<"No se pudo crear el archivo"; exit(1);}
-
-         archivo<<"}"<<std::endl;
-         archivo.close();//cerrar el archivo
- }
-
-
- std::string bst::graficarPreorden()
- {
-     std::string result = "node20[label = \"<f0> | <f1> Arbol Vacio | <f2>\"]";
      if(this->raiz!=nullptr)
      {
-        result = graficarPreorden(this->raiz);
-     }
-
-    return result;
+       graficarPreorden(this->raiz);
+     }else {
+       txtgrafica = "node20[label = \"<f0> | <f1> Arbol Vacio | <f2>\"]";
+    }
  }
- std::string bst::graficarPreorden(nodoBst* raiz)
+ void bst::graficarPreorden(nodoBst* raiz)
  {
-    std::string result = "";
     if(raiz != nullptr)
     {
-        std::string temp = "";
-        std::string puntero="";
-        std::string cod = raiz->getValor().id;
-        std::string nom = raiz->getValor().nombre;
-
-        if((raiz->getder()==nullptr)&&(raiz->getizq() ==nullptr))
-        {
-           result ="node"+cod+"[label =\"<f0> | <f1> cod: "+cod+"\\nnombre: "+nom+" | <f2>\"]\n";
-        }
-
-
+        txtgrafica +="node"+raiz->getValor().id+"[label =\"<f0> | <f1> cod: "+raiz->getValor().id+"\\nnombre: "+raiz->getValor().nombre+" | <f2>\"]\n";
+        graficarPreorden(raiz->getizq());
         if(raiz->getizq()!=nullptr)
         {
-
-            temp =graficarPreorden(raiz->getizq());
-            result = temp+"node"+cod+"[label =\"<f0> | <f1> cod: "+cod+"\\nnombre: "+nom+" | <f2>\"]\n\n";
-            puntero = "\"node"+cod+"\":f0-> \"node"+raiz->getizq()->getValor().id+"\":f1\n";
-            result = result+puntero;
-
+            txtgrafica += "\"node"+raiz->getValor().id+"\":f0-> \"node"+raiz->getizq()->getValor().id+"\":f1\n\n";
         }
 
+         graficarPreorden(raiz->getder());
         if(raiz->getder()!=nullptr)
         {
-
-             temp =graficarPreorden(raiz->getder());
-             result = result+temp+"node"+cod+"[label =\"<f0> | <f1> cod: "+cod+"\\nnombre: "+nom+" | <f2>\"]\n\n";
-             puntero = "\"node"+cod+"\":f2-> \"node"+raiz->getder()->getValor().id+"\":f1\n";
-             result = result+puntero;
-
+             txtgrafica += "\"node"+raiz->getValor().id+"\":f2-> \"node"+raiz->getder()->getValor().id+"\":f1\n\n";
         }
     }
 
 
-    return result;
+
  }
 
+ void bst::insertarLista(std::list<catedratico> lista){
 
+     for( auto it = lista.begin(); it != lista.end(); ++it )
+     {
+            catedratico aux = *it;
+            insertar(aux);
+     }
 
+ }
 
 
 

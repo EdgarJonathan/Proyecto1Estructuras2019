@@ -1,14 +1,16 @@
 #ifndef BST_H
 #define BST_H
 
-#include<string>
+#include <string>
 #include <iostream>
 #include <fstream>
 #include <stdlib.h>
+#include <list>
+
 
 
 /*****************************************************************************
-*************************** Nodo bst       ************************************
+***************************      Nodo bst ************************************
 ******************************************************************************
 ******************************************************************************
 ******************************************************************************/
@@ -26,7 +28,6 @@ class nodoBst
         catedratico  ing;
         nodoBst *izq;
         nodoBst *der;
-
 
     public:
     nodoBst(catedratico ing);
@@ -69,24 +70,22 @@ class bst
     void postorden();
     void insertar (catedratico valor);
     catedratico buscar(std::string codigo);
-
     void graficar();
+    void insertarTexto(std::string texto);
+    void graficarPreorden();
+    void insertarLista(std::list<catedratico> lista);
 
 
-    private:
-    std::string txtgrafica = "";
+private:
+std::string txtgrafica = "";
     void preorden(nodoBst *r);
     void inorden(nodoBst *r);
     void postorden(nodoBst *r);
     nodoBst* insertar(nodoBst* raiz, catedratico dato);
     nodoBst* buscar(nodoBst* raiz, std::string codigo);
+    void textoDot(std::string nombre);
+    void graficarPreorden(nodoBst* raiz);
 
-    void encabezado(std::string nombre);
-    void cuerpo(std::string nombre);
-    void pie(std::string nombre);
-
-    std::string graficarPreorden();
-    std::string graficarPreorden(nodoBst* raiz);
 
 
 };
