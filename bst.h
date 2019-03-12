@@ -61,23 +61,24 @@ class bst
     public:
     bst();
     bst(nodoBst *r);
-    void setRaiz( nodoBst *r);
-    nodoBst* getRaiz();
     bool estavacio();
-
     void preorden();
     void inorden();
     void postorden();
     void insertar (catedratico valor);
     catedratico buscar(std::string codigo);
     void graficar();
-    void insertarTexto(std::string texto);
     void graficarPreorden();
     void insertarLista(std::list<catedratico> lista);
+    std::list<catedratico> obtenerArbol();
 
 
 private:
-std::string txtgrafica = "";
+    std::string txtgrafica = "";
+    std::list<catedratico> listarbol;
+
+    void obtenerArbol(nodoBst* r);
+    void insertarTexto(std::string texto);
     void preorden(nodoBst *r);
     void inorden(nodoBst *r);
     void postorden(nodoBst *r);
