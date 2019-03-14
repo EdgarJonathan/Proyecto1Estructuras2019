@@ -45,20 +45,38 @@ int main()
     miarbol.insertarLista(lista);
     miarbol.inorden();*/
 
+
+   //------------------------------obteniendo el arbol en forma de lista------------------------------
    csv a = csv();
    bst miarbol = bst();
    std::string entrada ="ax10,ing mauricio\nax20,ing angel,\nax95,ing runinn\nax85,ing trueno";
 
    miarbol.insertarLista(a.obtenerCatedraticos(entrada));
-   miarbol.inorden();
 
 
+   std::list<catedratico> lista = miarbol.obtenerArbol();
 
+   auto iterador = lista.begin();
+   auto fin = lista.end();
 
+   std::cout<<"------------primera llamada---------------"<<std::endl;
+   for(iterador ; iterador != fin ; ++iterador){
+       catedratico cat = *iterador;
+       std::cout<<"id: "<<cat.id<<"nombre:"<<cat.nombre<<std::endl;
+   }
 
+   std::list<catedratico> lista1 = miarbol.obtenerArbol();
+   auto iterador1 = lista1.begin();
+   auto fin1 = lista1.end();
+
+   std::cout<<"------------segunda llamada---------------"<<std::endl;
+   for(iterador1 ; iterador1 != fin1 ; ++iterador1){
+       catedratico cat = *iterador1;
+       std::cout<<"id: "<<cat.id<<"nombre:"<<cat.nombre<<std::endl;
+   }
 
     return 0;
 
-}
 
+}
 

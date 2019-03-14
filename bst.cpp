@@ -266,23 +266,15 @@ void insertar(std::list<catedratico>);        raiz = new nodoBst(dato);
 
  std::list<catedratico> bst::obtenerArbol(){
 
-/*
-     std::list<recurso> lista;
-     NCola *tmp = primeroC;
-     do{
-         lista.push_back(tmp->datoNodo());
-         tmp = tmp->getSiguiente();
-     }while(tmp!=primeroC);
-      return lista;*/
-
 
      if(this->raiz!= nullptr)
      {
+         listarbol.clear();
         obtenerArbol(this->raiz);
 
      }else{
+         listarbol.clear();
          listarbol.push_back({"NULL","NULL"});
-
      }
 
 
@@ -296,9 +288,9 @@ void insertar(std::list<catedratico>);        raiz = new nodoBst(dato);
 
      if(r!= nullptr)
      {
-        inorden(r->getizq());
+        obtenerArbol(r->getizq());
         listarbol.push_back(r->getValor());
-        inorden(r->getder());
+        obtenerArbol(r->getder());
      }
 
  }
