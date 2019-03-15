@@ -1,13 +1,15 @@
 #include <iostream>
 #include <bst.h>
 #include <listcursos.h>
+#include <listedificios.h>
 
 
 using namespace std;
 
 int main()
 {
-  bst* miarbol = new bst();
+    //----------------------------------arbol de catedraticos y lista de cursos---------------
+  /*bst* miarbol = new bst();
   listCursos* misCusros = new listCursos();
 
   miarbol->insertar({"AX31","ing abastraccion"});
@@ -37,8 +39,35 @@ int main()
   misCusros->imprimirLista();
   //miarbol->graficar();
 
-  misCusros->graficar(miarbol->obtenerdotGrafica());
+  misCusros->graficar(miarbol->obtenerdotGrafica());*/
 
+ //----------------------------------lista de salones ----------------------------------------
+   /* listSalon* salones = new listSalon();
+
+     salones->insertar({45 ,879});
+    salones->insertar({25 ,915});
+    salones->insertar({75 ,312});
+    salones->insertar({60 ,924});
+    salones->insertar({85 ,879});
+    salones->insertar({25 ,89});
+    salones->insertar({65 ,854});
+    salones->insertar({10 ,898});
+
+    salones->imprimirLista();*/
+
+  //-------------------------------lista edificios--------------------------------------------
+    listEdificios* Edificios = new listEdificios();
+
+    Edificios->insertar({5,8,"t-3"});
+    Edificios->insertar({9,560,"t-4"});
+    Edificios->insertar({6,98,"t-3"});
+    Edificios->insertar({5,845,"t-2"});
+    Edificios->insertar({3,88,"t-2"});
+    Edificios->insertar({78,865,"t-4"});
+    Edificios->insertar({3,856,"t-4"});
+    Edificios->insertar({8,856,"t-4"});
+
+    Edificios->imprimirLista();
 
     return 0;
 

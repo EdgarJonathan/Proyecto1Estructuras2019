@@ -32,9 +32,11 @@ nodolist* listCursos::buscarId(std::string d)
 {
     nodolist* tmp = primero;
     do {
+
         if(tmp->getValor().id==d){
             return tmp;
         }
+
         tmp = tmp->getSig();
     }while (tmp!=primero);
 
@@ -104,19 +106,15 @@ void listCursos::ordenarLista(nodolist* nuevo)
 
         while(actual!=ultimo)
         {
-            if(
-                    (nuevo->getValor().id >= actual->getValor().id)
-                    &&(nuevo->getValor().id <= actual->getSig()->getValor().id)
-                    )
+            if((nuevo->getValor().id >= actual->getValor().id)
+              &&(nuevo->getValor().id <= actual->getSig()->getValor().id))
             {
                 nuevo->setSig(actual->getSig());
                 actual->setSig(nuevo);
                 break;
             }
-
             actual=actual->getSig();
         }
-
     }
 
 }
@@ -159,9 +157,9 @@ void listCursos::generarDot(std::string nombre, std::string dotArbol){
     archivo<<"\tnode [shape=record fontsize=10 fontname=\"Verdana\"];\n"<<std::endl;
 
 
-   archivo<<subGrafoArbol(dotArbol)<<std::endl;
-   archivo<<subGrafoLista()<<std::endl;
-   archivo<<dotEnlacesListaArbol<<std::endl;
+    archivo<<subGrafoArbol(dotArbol)<<std::endl;
+    archivo<<subGrafoLista()<<std::endl;
+    archivo<<dotEnlacesListaArbol<<std::endl;
 
     archivo<<"}\n"<<std::endl;
 
@@ -198,7 +196,7 @@ std::string listCursos::subGrafoLista()
 
         if(actual==ultimo)
         {
-           /* lista+="\t\t\tnode"+actual->getValor().id
+            /* lista+="\t\t\tnode"+actual->getValor().id
                     +"[label=\" id_Curso: "+actual->getValor().id
                     +"\\nCurso: "+actual->getValor().nombre
                     +"\\nCatedratico: "+actual->getCatedratico()->getValor().nombre+"\"];\n";
@@ -248,7 +246,7 @@ std::string listCursos::subGrafoLista()
         actual = actual->getSig();
     }while(actual!=primero);
 
-   // lista+=rank+"\n";
+    // lista+=rank+"\n";
     lista+="\t\t\tcolor=blue;\n";
     lista+="\t\t\tlabel=\"Lista de Cursos\"\n";
     lista+="\t\t}\n";
