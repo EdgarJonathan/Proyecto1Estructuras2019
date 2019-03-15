@@ -6,9 +6,11 @@ CONFIG -= qt
 SOURCES += \
         main.cpp \
     bst.cpp \
-    csv.cpp
+    listcursos.cpp \
+    matriz.cpp
 
 HEADERS += \
     bst.h \
     bst.h \
-    csv.h
+    listcursos.h \
+    matriz.h

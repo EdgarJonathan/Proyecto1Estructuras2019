@@ -1,79 +1,44 @@
 #include <iostream>
 #include <bst.h>
-#include <csv.h>
+#include <listcursos.h>
 
-//#include <climits>
 
 using namespace std;
 
 int main()
 {
-  /*  bst miarbol = bst();
+  bst* miarbol = new bst();
+  listCursos* misCusros = new listCursos();
 
-    miarbol.insertar({"dario","ing1"});
-    miarbol.insertar({"barco","ing1"});
-    miarbol.insertar({"cabello","ing1"});
-    miarbol.insertar({"far","ing1"});
-    miarbol.insertar({"ernesto","ing1"});
-    miarbol.insertar({"zoan","ing1"});
-    miarbol.insertar({"ana","ing1"});
+  miarbol->insertar({"AX31","ing abastraccion"});
+  miarbol->insertar({"AX29","ing asincrono"});
+  miarbol->insertar({"AX36","ing asturias"});
+  miarbol->insertar({"AX30","ing blatbox"});
+  miarbol->insertar({"AX28","ing callback"});
+  miarbol->insertar({"AX34","ing carlos"});
+  miarbol->insertar({"AX26","ing castro"});
+  miarbol->insertar({"AX32","ing grafo"});
+  miarbol->insertar({"AX25","ing mario"});
+  miarbol->insertar({"AX35","ing mauricio"});
+  miarbol->insertar({"AX27","ing null"});
+  miarbol->insertar({"AX37","ing pablo"});
+  miarbol->insertar({"AX33","ing fijo"});
 
+  miarbol->inorden();
 
+  misCusros->insertar({"BS050","Estructura","AX31"},miarbol);
+  misCusros->insertar({"BS030","Estadistica","AX29"},miarbol);
+  misCusros->insertar({"BS060","Compiladores","AX28"},miarbol);
+  misCusros->insertar({"BS045","Arquitectura","AX26"},miarbol);
+  misCusros->insertar({"BS070","Organizacion","AX30"},miarbol);
+  misCusros->insertar({"BS012","Topografia","AX35"},miarbol);
+  misCusros->insertar({"BS055","Electrica","AX31"},miarbol);
 
-//    for (int i=0;i<10;i++) {
+  misCusros->imprimirLista();
+  //miarbol->graficar();
 
-//        miarbol.insertar({"AX"+std::to_string(i),"ing1"});
-//    }
+  misCusros->graficar(miarbol->obtenerdotGrafica());
 
-    miarbol.preorden();
-    miarbol.inorden();
-   // miarbol.graficar();
-
-    bst miarbol = bst();
-
-    std::list<catedratico> lista;
-    lista.push_back({"gario","ing1"});
-    lista.push_back({"auatemala","ing1"});
-    lista.push_back({"caramelo","ing1"});
-    lista.push_back({"hacha","ing1"});
-    lista.push_back({"zombie","ing1"});
-    lista.push_back({"beta","ing1"});
-    lista.push_back({"faro","ing1"});
-    lista.push_back({"duty","ing1"});
-
-
-    miarbol.insertarLista(lista);
-    miarbol.inorden();*/
-
-
-   //------------------------------obteniendo el arbol en forma de lista------------------------------
-   csv a = csv();
-   bst miarbol = bst();
-   std::string entrada ="ax10,ing mauricio\nax20,ing angel,\nax95,ing runinn\nax85,ing trueno";
-
-   miarbol.insertarLista(a.obtenerCatedraticos(entrada));
-
-
-   std::list<catedratico> lista = miarbol.obtenerArbol();
-
-   auto iterador = lista.begin();
-   auto fin = lista.end();
-
-   std::cout<<"------------primera llamada---------------"<<std::endl;
-   for(iterador ; iterador != fin ; ++iterador){
-       catedratico cat = *iterador;
-       std::cout<<"id: "<<cat.id<<"nombre:"<<cat.nombre<<std::endl;
-   }
-
-   std::list<catedratico> lista1 = miarbol.obtenerArbol();
-   auto iterador1 = lista1.begin();
-   auto fin1 = lista1.end();
-
-   std::cout<<"------------segunda llamada---------------"<<std::endl;
-   for(iterador1 ; iterador1 != fin1 ; ++iterador1){
-       catedratico cat = *iterador1;
-       std::cout<<"id: "<<cat.id<<"nombre:"<<cat.nombre<<std::endl;
-   }
 
     return 0;
 

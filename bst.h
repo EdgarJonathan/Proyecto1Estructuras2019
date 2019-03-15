@@ -40,6 +40,7 @@ class nodoBst
     nodoBst* getder(){ return der; }
     // operaciones de modificación
     void setValor(catedratico n){ this->ing = n; }
+    void setNombre(std::string nombre){this->ing.nombre=nombre;}
     void setizq(nodoBst* n){ izq = n; }
     void setder(nodoBst* n){ der = n; }
 
@@ -61,16 +62,20 @@ class bst
     public:
     bst();
     bst(nodoBst *r);
+    nodoBst* getRaiz(){return this->raiz;}
     bool estavacio();
     void preorden();
     void inorden();
     void postorden();
     void insertar (catedratico valor);
     catedratico buscar(std::string codigo);
+    nodoBst* buscarId(std::string codigo);
+    std::string obtenerdotGrafica();
     void graficar();
-    void graficarPreorden();
     void insertarLista(std::list<catedratico> lista);
     std::list<catedratico> obtenerArbol();
+    std::string editarCatedratico(catedratico cat);
+    void eliminar(catedratico valor);
 
 
 private:
@@ -85,9 +90,10 @@ private:
     nodoBst* insertar(nodoBst* raiz, catedratico dato);
     nodoBst* buscar(nodoBst* raiz, std::string codigo);
     void textoDot(std::string nombre);
+    void graficarPreorden();
     void graficarPreorden(nodoBst* raiz);
-
-
+    nodoBst* eliminar(nodoBst *r, catedratico dato);
+    nodoBst* reemplazar(nodoBst* act);
 
 };
 
