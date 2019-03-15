@@ -56,7 +56,7 @@ int main()
     salones->imprimirLista();*/
 
   //-------------------------------lista edificios--------------------------------------------
-    listEdificios* Edificios = new listEdificios();
+  /*  listEdificios* Edificios = new listEdificios();
 
     Edificios->insertar({5,8,"t-3"});
     Edificios->insertar({9,560,"t-4"});
@@ -67,7 +67,9 @@ int main()
     Edificios->insertar({3,856,"t-4"});
     Edificios->insertar({8,856,"t-4"});
 
-    Edificios->imprimirLista();
+    Edificios->imprimirLista();*/
+
+
 
     return 0;
 
