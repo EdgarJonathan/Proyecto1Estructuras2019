@@ -168,14 +168,14 @@ std::string listEdificios::insertar(building edificio){
 
         return "se agrego exitosamente";
 
-    }else if(buscarId(nuevo->getValor())==nullptr)
+    }else if(buscarId(nuevo->getEdificioString())==nullptr)
     {
         nuevo->insertarSalon(edificio.no_salon,edificio.capacidad);
         ordenarLista(nuevo);
         return "se agrego exitosamente";
     }else{
 
-        nodoEdificio* encontrado = buscarId(nuevo->getValor());
+        nodoEdificio* encontrado = buscarId(nuevo->getEdificioString());
         encontrado->insertarSalon(edificio.no_salon,edificio.capacidad);
         return "se agrego exitosamente";
     }
@@ -187,14 +187,14 @@ void listEdificios::ordenarLista(nodoEdificio* nuevo){
     nodoEdificio* actual = primero;
 
     //el nuevo nodo es menor al primero
-    if(nuevo->getValor() < primero->getValor())
+    if(nuevo->getEdificioString() < primero->getEdificioString())
     {
         primero->setAnt(nuevo);
         nuevo->setSig(primero);
         nuevo->setAnt(nullptr);
         primero =nuevo;
     }//si es mayor o igual al ultimo
-    else if(nuevo->getValor() >= ultimo->getValor()){
+    else if(nuevo->getEdificioString() >= ultimo->getEdificioString()){
 
         ultimo->setSig(nuevo);
         nuevo->setAnt(ultimo);
@@ -206,8 +206,8 @@ void listEdificios::ordenarLista(nodoEdificio* nuevo){
     else {
         while (actual!=ultimo) {
 
-            if ((nuevo->getValor() >= actual->getValor()) &&
-               (nuevo->getValor() <= actual->getSig()->getValor()))
+            if ((nuevo->getEdificioString() >= actual->getEdificioString()) &&
+               (nuevo->getEdificioString() <= actual->getSig()->getEdificioString()))
             {
                 nuevo->setSig(actual->getSig());
                 nuevo->setAnt(actual);
@@ -227,7 +227,7 @@ nodoEdificio* listEdificios::buscarId(std::string edificio){
 
     nodoEdificio* tmp = primero;
     while (tmp!=nullptr) {
-        if(tmp->getValor() == edificio)
+        if(tmp->getEdificioString() == edificio)
         {
             return tmp;
         }
@@ -241,7 +241,7 @@ std::list<std::string> listEdificios::linealizar(){
     std::list<std::string> lista;
     nodoEdificio* tmp = primero;
     while (tmp != nullptr) {
-        lista.push_back(tmp->getValor());
+        lista.push_back(tmp->getEdificioString());
         tmp = tmp->getSig();
     }
     return lista;
@@ -255,7 +255,7 @@ void listEdificios::imprimirLista(){
     std::string capacidad="";
     while(actual!=nullptr)
     {
-        std::cout<<"Edificio-> "<<actual->getValor()<<": "<<std::endl;
+        std::cout<<"Edificio-> "<<actual->getEdificioString()<<": "<<std::endl;
         nodoSalon* actualSalon = actual->getSalones()->primero;
 
         while (actualSalon!=nullptr) {
@@ -269,3 +269,51 @@ void listEdificios::imprimirLista(){
     }
 
 }
+
+salonEdificio listEdificios::obtnerSalon(std::string edificio, int no_salon){
+
+
+    nodoEdificio* actual =primero;
+
+    salonEdificio result = {"NULL",nullptr};
+
+    while(actual!=nullptr)
+    {
+        if(actual->getEdificioString()==edificio)
+        {
+
+            nodoSalon* actualSalon = actual->getSalones()->primero;
+            while (actualSalon!=nullptr) {
+
+                if(actualSalon->getValor().no_salon == no_salon)
+                {
+                    result = {edificio,actualSalon};
+                }
+
+                actualSalon = actualSalon->getSig();
+            }
+            actual=actual->getSig();
+            break;
+        }
+
+        actual = actual->getSig();
+    }
+
+
+      return result;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

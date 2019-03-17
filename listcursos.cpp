@@ -5,7 +5,7 @@
 ******************************************************************************
 ******************************************************************************
 ******************************************************************************/
-nodolist::nodolist(Curso curso, bst* arbol)
+nodoCurso::nodoCurso(Curso curso, bst* arbol)
 {
     nodoBst* cat = arbol->buscarId(curso.idCatedratico);
 
@@ -28,9 +28,9 @@ listCursos::listCursos()
 }
 
 
-nodolist* listCursos::buscarId(std::string d)
+nodoCurso* listCursos::buscarId(std::string d)
 {
-    nodolist* tmp = primero;
+    nodoCurso* tmp = primero;
     do {
 
         if(tmp->getValor().id==d){
@@ -47,8 +47,8 @@ nodolist* listCursos::buscarId(std::string d)
 std::string listCursos::insertar(Curso curso,bst* arbol)
 {
 
-    nodolist* nuevo;
-    nuevo = new nodolist(curso,arbol);
+    nodoCurso* nuevo;
+    nuevo = new nodoCurso(curso,arbol);
 
     //verificamos si existe un catedratico para este curso
     if(nuevo->getCatedratico()!=nullptr)
@@ -80,9 +80,9 @@ std::string listCursos::insertar(Curso curso,bst* arbol)
 
 }
 
-void listCursos::ordenarLista(nodolist* nuevo)
+void listCursos::ordenarLista(nodoCurso* nuevo)
 {
-    nodolist* actual =primero;
+    nodoCurso* actual =primero;
 
     //si el nuevo es menor al primero
     if(nuevo->getValor().id < primero->getValor().id )
@@ -122,7 +122,7 @@ void listCursos::ordenarLista(nodolist* nuevo)
 
 void listCursos::imprimirLista()
 {
-    nodolist* actual =primero;
+    nodoCurso* actual =primero;
 
     std::cout<<"-----------Mis Cursos---------------"<<std::endl;
     do{
@@ -185,7 +185,7 @@ std::string listCursos::subGrafoLista()
 {
     std::string lista="";
     std::string rank="\t\t\t{rank = same;";
-    nodolist* actual=primero;
+    nodoCurso* actual=primero;
 
     lista+="\t\tsubgraph cluster_1 {\n";
     lista+="\t\t\trankdir=ud;\n";

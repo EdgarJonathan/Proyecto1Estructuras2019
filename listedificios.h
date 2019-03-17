@@ -9,6 +9,8 @@ struct building
     int capacidad;
     std::string edificio;
 };
+
+
 /*****************************************************************************
 *************************** Nodo Salon****************************************
 ******************************************************************************
@@ -39,6 +41,11 @@ public:
     void setValor(Salon n){ this->salon = n; }
     void setSig(nodoSalon* n){ this->sig = n; }
     void setAnt(nodoSalon* n){ this->ant = n; }
+};
+
+struct salonEdificio{
+    std::string edificio;
+    nodoSalon* salon;
 };
 
 /*****************************************************************************
@@ -83,7 +90,7 @@ public:
     nodoEdificio(std::string edificio);
     void insertarSalon(int salon,int capacidad);
     //operacionde acceso
-    std::string  getValor(){ return edificio; }
+    std::string  getEdificioString(){ return edificio; }
     listSalon*   getSalones(){return salones;}
     nodoEdificio* getSig(){ return sig; }
     nodoEdificio* getAnt(){ return ant; }
@@ -118,6 +125,7 @@ public:
     std::string insertar(building edificio);
     std::list<std::string> linealizar();
     void imprimirLista();
+    salonEdificio obtnerSalon(std::string edificio, int no_salon);
 
 };
 

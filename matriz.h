@@ -4,18 +4,32 @@
 #include <stdlib.h>
 #include <string>
 #include <listcursos.h>
+#include <listedificios.h>
+
 
 struct index{
 
     std::string  horaInicio;
-    int no_salon;
+    nodoSalon* salon;
+    std::string edificio;
 };
 
 struct contenido
 {
     std::string horaFinal;
-    nodolist* curso;
+    nodoCurso* curso;
 };
+
+struct stOrtogonal{
+
+    std::string  horaInicio;
+    std::string horaFinal;
+    std::string edificio;
+    int no_salon;
+    std::string idCurso;
+
+};
+
 
 
 //********************************************************************************
@@ -58,30 +72,105 @@ class ListaOrtogonal
 {
 
 public:
-    NodoOrtogonal* primeroFila;
-    NodoOrtogonal* ultimoFila;
-    NodoOrtogonal* primeroCol;
-    NodoOrtogonal* ultimoCol;
-
+    NodoOrtogonal* primerolistaHorizontal;
+    NodoOrtogonal* ultimolistaHorizontal;
+    NodoOrtogonal* primerolistaVertical;
+    NodoOrtogonal* ultimolistaVertical;
 
     ListaOrtogonal();
-    std::string insertarFila(NodoOrtogonal* nuevo);
-    bool buscarCursoFila(std::string curso);
-    void ordenarFila(NodoOrtogonal* nuevo);
+    std::string insertarListaHorizontal(NodoOrtogonal* nuevo);
+    std::string insertarListaVertical(NodoOrtogonal* nuevo);
 
-
-    std::string insertarCol(NodoOrtogonal* nuevo);
-    bool buscarCursoCol(std::string nuevo);
-    void ordenarCol(NodoOrtogonal* nuevo);
+private:
+    void ordenarListaHorizontal(NodoOrtogonal* nuevo);
+    void ordenarListaVertical(NodoOrtogonal* nuevo);
 
 };
 
+
+//********************************************************************************
+//***********************CLASE NODO FILA******************************************
+//********************************************************************************
+class NodoCabeceraFila
+{
+
+public:
+
+    NodoCabeceraFila(NodoOrtogonal* nuevo);
+    nodoSalon* salon;
+    std::string edificio;
+    NodoCabeceraFila* arriba;
+    NodoCabeceraFila*  abajo;
+    ListaOrtogonal* listHorizontal;
+
+};
+
+
+//********************************************************************************
+//************************CLASE LISTA FILA ***************************************
+//********************************************************************************
+class ListaCabeceraFila
+{
+
+public:
+    NodoCabeceraFila* primero;
+    NodoCabeceraFila* ultimo;
+
+    ListaCabeceraFila();
+
+    std::string insertar(NodoOrtogonal* nuevo);
+private:
+    NodoCabeceraFila* buscarFila(std::string edificio,int salon);
+    void ordenar(NodoCabeceraFila* nuevo);
+};
+
+//********************************************************************************
+//************************CLASE NODO COLUMNA *************************************
+//********************************************************************************
+class NodoCabeceraColumna
+{
+
+public:
+    NodoCabeceraColumna(NodoOrtogonal *nuevo);
+    std::string horaInicio;
+    NodoCabeceraColumna* sig;
+    NodoCabeceraColumna*  ant;
+    ListaOrtogonal* listVertical;
+
+
+};
+//********************************************************************************
+//************************CLASE LISTA COLUMNA ************************************
+//********************************************************************************
+class ListaCabeceraColumna
+{
+
+public:
+    NodoCabeceraColumna* primero;
+    NodoCabeceraColumna* ultimo;
+
+    ListaCabeceraColumna();
+    std::string insertar(NodoOrtogonal* nuevo);
+ private:
+    NodoCabeceraColumna* buscarCol(std::string horaInicio);
+    void ordenar(NodoCabeceraColumna* nuevo);
+};
+
+//********************************************************************************
+//************************CLASE matriz ************************************
+//********************************************************************************
 
 class matriz
 {
 
 public:
+
     matriz();
+    ListaCabeceraFila* fila;
+    ListaCabeceraColumna* col;
+    std::string insertar(stOrtogonal datos,listCursos* cursos, listEdificios* edificios );
+    void graficar();
+    void generarDot();
 };
 
 #endif // MATRIZ_H

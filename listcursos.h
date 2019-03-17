@@ -16,23 +16,23 @@ struct Curso{
     std::string idCatedratico;
 };
 
-class nodolist
+class nodoCurso
 {
     protected:
     Curso curso;
     nodoBst* catedratico;
-    nodolist* siguiente;
+    nodoCurso* siguiente;
 
     public:
     //constructor
-    nodolist(Curso curso,bst*arbol);
+    nodoCurso(Curso curso,bst*arbol);
     // operaciones de acceso
     Curso getValor(){ return curso; }
     nodoBst* getCatedratico(){return catedratico;}
-    nodolist* getSig(){ return siguiente; }
+    nodoCurso* getSig(){ return siguiente; }
     // operaciones de modificación
     void setValor(Curso n){ this->curso = n; }
-    void setSig(nodolist* n){ siguiente = n; }
+    void setSig(nodoCurso* n){ siguiente = n; }
     void setCatedratico(nodoBst* cat){ this->catedratico=cat;}
 
 
@@ -50,16 +50,17 @@ class listCursos
 {
 public:
     listCursos();
-    nodolist* primero;
-    nodolist* ultimo;
+    nodoCurso* primero;
+    nodoCurso* ultimo;
     std::string insertar(Curso curso,bst* arbol);
     void imprimirLista();
     void graficar(std::string dotArbol);
+    nodoCurso* buscarId(std::string d);
 
 private:
       std::string dotEnlacesListaArbol="";
-      void ordenarLista(nodolist* nuevo);
-      nodolist* buscarId(std::string d);
+      void ordenarLista(nodoCurso* nuevo);
+
       std::string subGrafoArbol(std::string dotArbol);
       std::string subGrafoLista();
       void generarDot(std::string nombre,std::string dotArbol);

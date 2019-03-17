@@ -2,6 +2,7 @@
 #include <bst.h>
 #include <listcursos.h>
 #include <listedificios.h>
+#include <matriz.h>
 
 
 using namespace std;
@@ -9,13 +10,13 @@ using namespace std;
 int main()
 {
     //----------------------------------arbol de catedraticos y lista de cursos---------------
-  /*bst* miarbol = new bst();
+  bst* miarbol = new bst();
   listCursos* misCusros = new listCursos();
 
   miarbol->insertar({"AX31","ing abastraccion"});
   miarbol->insertar({"AX29","ing asincrono"});
   miarbol->insertar({"AX36","ing asturias"});
-  miarbol->insertar({"AX30","ing blatbox"});
+  miarbol->insertar({"AX10","ing lorena"});
   miarbol->insertar({"AX28","ing callback"});
   miarbol->insertar({"AX34","ing carlos"});
   miarbol->insertar({"AX26","ing castro"});
@@ -28,7 +29,7 @@ int main()
 
   miarbol->inorden();
 
-  misCusros->insertar({"BS050","Estructura","AX31"},miarbol);
+  misCusros->insertar({"BS050","Estructura","AX10"},miarbol);
   misCusros->insertar({"BS030","Estadistica","AX29"},miarbol);
   misCusros->insertar({"BS060","Compiladores","AX28"},miarbol);
   misCusros->insertar({"BS045","Arquitectura","AX26"},miarbol);
@@ -38,25 +39,11 @@ int main()
 
   misCusros->imprimirLista();
   //miarbol->graficar();
+  //misCusros->graficar(miarbol->obtenerdotGrafica());*/
 
-  misCusros->graficar(miarbol->obtenerdotGrafica());*/
-
- //----------------------------------lista de salones ----------------------------------------
-   /* listSalon* salones = new listSalon();
-
-     salones->insertar({45 ,879});
-    salones->insertar({25 ,915});
-    salones->insertar({75 ,312});
-    salones->insertar({60 ,924});
-    salones->insertar({85 ,879});
-    salones->insertar({25 ,89});
-    salones->insertar({65 ,854});
-    salones->insertar({10 ,898});
-
-    salones->imprimirLista();*/
 
   //-------------------------------lista edificios--------------------------------------------
-  /*  listEdificios* Edificios = new listEdificios();
+   listEdificios* Edificios = new listEdificios();
 
     Edificios->insertar({5,8,"t-3"});
     Edificios->insertar({9,560,"t-4"});
@@ -67,7 +54,25 @@ int main()
     Edificios->insertar({3,856,"t-4"});
     Edificios->insertar({8,856,"t-4"});
 
-    Edificios->imprimirLista();*/
+    Edificios->imprimirLista();
+
+    matriz* miMatriz = new matriz();
+    stOrtogonal dato;
+
+
+    dato= {"7:00","7:30","t-4",3,"BS055"};
+    std::cout<<"{"+miMatriz->insertar(dato,misCusros,Edificios)+"]"<<std::endl;
+    dato= {"7:00","7:30","t-2",3,"BS055"};
+    std::cout<<"{"+miMatriz->insertar(dato,misCusros,Edificios)+"]"<<std::endl;
+    dato= {"4:00","5:30","t-3",5,"BS055"};
+    std::cout<<"{"+miMatriz->insertar(dato,misCusros,Edificios)+"]"<<std::endl;
+    dato= {"10:00","7:30","t-4",3,"BS055"};
+    std::cout<<"{"+miMatriz->insertar(dato,misCusros,Edificios)+"]"<<std::endl;
+    dato= {"7:00","7:30","t-4",8,"BS055"};
+    std::cout<<"{"+miMatriz->insertar(dato,misCusros,Edificios)+"]"<<std::endl;
+    dato= {"5:00","7:30","t-4",3,"BS055"};
+    std::cout<<"{"+miMatriz->insertar(dato,misCusros,Edificios)+"]"<<std::endl;
+
 
 
 
