@@ -187,7 +187,7 @@ void listEdificios::ordenarLista(nodoEdificio* nuevo){
     nodoEdificio* actual = primero;
 
     //el nuevo nodo es menor al primero
-    if(nuevo->getEdificioString() < primero->getEdificioString())
+    if(nuevo->getEdificioString() <= primero->getEdificioString())
     {
         primero->setAnt(nuevo);
         nuevo->setSig(primero);
@@ -288,12 +288,13 @@ salonEdificio listEdificios::obtnerSalon(std::string edificio, int no_salon){
                 if(actualSalon->getValor().no_salon == no_salon)
                 {
                     result = {edificio,actualSalon};
+                    break;
                 }
 
                 actualSalon = actualSalon->getSig();
             }
-            actual=actual->getSig();
-            break;
+                break;
+
         }
 
         actual = actual->getSig();

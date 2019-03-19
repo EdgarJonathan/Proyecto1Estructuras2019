@@ -3,7 +3,7 @@
 //********************************************************************************
 //************************CLASE NODO ORTOGONAL************************************
 //********************************************************************************
-NodoOrtogonal::NodoOrtogonal(index indice,contenido cont)
+NodoOrtogonal::NodoOrtogonal(xy indice,contenido cont)
 {
     this->indice = indice;
     this->cont = cont;
@@ -50,17 +50,19 @@ std::string ListaOrtogonal::insertarListaHorizontal(NodoOrtogonal* nuevo)
 void ListaOrtogonal::ordenarListaHorizontal(NodoOrtogonal*  nuevo)
 {
     NodoOrtogonal* actualFila = primerolistaHorizontal;
-
+    int Nhorainicio= csv::getnum(nuevo->getIndex().horaInicio);
+    int Phorainicio = csv::getnum(primerolistaHorizontal->getIndex().horaInicio);
+    int Uhorainicio= csv::getnum(ultimolistaHorizontal->getIndex().horaInicio);
 
     //si el nuevo es menor al primero
-    if(nuevo->getIndex().horaInicio<= primerolistaHorizontal->getIndex().horaInicio)
+    if(Nhorainicio <= Phorainicio)
     {
         primerolistaHorizontal->setizq(nuevo);
         nuevo->setder(primerolistaHorizontal);
         nuevo->setizq(nullptr);
         primerolistaHorizontal=nuevo;
     }//si  es mayor o igual al ultimo
-    else if(nuevo->getIndex().horaInicio >= ultimolistaHorizontal->getIndex().horaInicio)
+    else if(Nhorainicio >= Uhorainicio)
     {
         ultimolistaHorizontal->setder(nuevo);
         nuevo->setizq(ultimolistaHorizontal);
@@ -72,8 +74,8 @@ void ListaOrtogonal::ordenarListaHorizontal(NodoOrtogonal*  nuevo)
     {
         while (actualFila!=ultimolistaHorizontal) {
 
-            if((nuevo->getIndex().horaInicio > actualFila->getIndex().horaInicio)
-               &&(nuevo->getIndex().horaInicio< actualFila->getder()->getIndex().horaInicio))
+            if((Nhorainicio >= csv::getnum(actualFila->getIndex().horaInicio))
+               &&(Nhorainicio <= csv::getnum(actualFila->getder()->getIndex().horaInicio)))
             {
                 nuevo->setder(actualFila->getder());
                 nuevo->setizq(actualFila);
@@ -424,8 +426,9 @@ void ListaCabeceraColumna::ordenar(NodoCabeceraColumna* nuevo){
 
     NodoCabeceraColumna* actual = primero;
 
+    csv::getnum(nuevo->horaInicio);
     //si el nuevo es menor al primero
-    if(nuevo->horaInicio< primero->horaInicio)
+    if( csv::getnum(nuevo->horaInicio)<= csv::getnum(primero->horaInicio) )
     {
         primero->ant=nuevo;
         nuevo->sig = primero;
@@ -434,7 +437,7 @@ void ListaCabeceraColumna::ordenar(NodoCabeceraColumna* nuevo){
 
 
     }//si  es mayor o igual al ultimo
-    else if(nuevo->horaInicio >= ultimo->horaInicio)
+    else if(csv::getnum(nuevo->horaInicio)>= csv::getnum(ultimo->horaInicio))
     {
         ultimo->sig = nuevo;
         nuevo->ant = ultimo;
@@ -447,8 +450,8 @@ void ListaCabeceraColumna::ordenar(NodoCabeceraColumna* nuevo){
     {
         while(actual!=ultimo)
         {
-            if((nuevo->horaInicio >= actual->horaInicio)
-               &&(nuevo->horaInicio<= actual->sig->horaInicio))
+            if((csv::getnum(nuevo->horaInicio)>= csv::getnum(actual->horaInicio) )
+               &&(csv::getnum(nuevo->horaInicio)<= csv::getnum(actual->sig->horaInicio) ) )
             {
                 nuevo->sig =actual->sig;
                 nuevo->ant =  actual;
@@ -482,7 +485,7 @@ std::string  matriz::insertar(stOrtogonal datos,listCursos* cursos, listEdificio
 
     if((EdificioEncontrado.salon!=nullptr)&&(cursoEncontrado!= nullptr))
     {
-        index indice;
+        xy indice;
         indice.horaInicio=datos.horaInicio;
         indice.salon = EdificioEncontrado.salon;
         indice.edificio= EdificioEncontrado.edificio;
@@ -506,9 +509,384 @@ std::string  matriz::insertar(stOrtogonal datos,listCursos* cursos, listEdificio
 }
 
 
+void matriz::graficar(){
+    std::string nombre = "matriz";
+    generarDot(nombre);
 
-void matriz::graficar(){}
-void matriz::generarDot(){}
+    //especificar el nomabre en los metodos system
+    system("dot -Tsvg -O matriz.dot");
+    system("xdg-open matriz.dot.svg");
+
+}
+
+
+
+void matriz::generarDot(std::string nombre){
+
+    std::ofstream archivo;
+    archivo.open(nombre+".dot",std::ios::out);//abriendo el archivo
+    if(archivo.fail()){ std::cout<<"No se pudo crear el archivo"; exit(1);}
+
+    archivo<<"digraph g "<<std::endl;
+    archivo<<"{\n"<<std::endl;
+    archivo<<"\tnodesep = 0.5;\n"<<std::endl;
+    archivo<<"\tnode[shape=box, color=turquoise4, fillcolor=green,style=filled ];\n"<<std::endl;
+    archivo<<"\tedge[color=tomato];\n"<<std::endl;
+    archivo<<"\trankdir=UD;\n"<<std::endl;
+
+    archivo<<txtCabeceraCol()<<std::endl;
+    archivo<<txtCabeceraFila()<<std::endl;
+    archivo<<txtFilas()<<std::endl;
+    archivo<<txtColumnas()<<std::endl;
+
+    archivo<<"}"<<std::endl;
+    archivo.close();//cerrar el archivo
+
+
+}
+
+
+std::string matriz::txtCabeceraCol()
+{
+    std::string result = "";
+    std::string rank ="\t{ rank = same ;";
+
+
+    NodoCabeceraColumna* actual = col->primero;
+    std::string Aclean="";
+    std::string Acleansig="";
+    std::string Ahora="";
+
+    result+="\t//----------------------cabecera columnas-----------------------\n";
+    while(actual != nullptr){
+
+        Aclean = csv::clean(actual->horaInicio);
+        Ahora = actual->horaInicio;
+
+        if(actual->sig==nullptr){
+
+            if(actual==col->primero){
+
+
+                result+="\tMatriz -> nd"+Aclean+"[constraint=false];\n";
+                result+="\tnd"+Aclean;
+                result+="[label =\""+Ahora+"\"];\n";
+                rank+="Matriz; nd"+Aclean+";}\n";
+
+            }else{
+
+
+                result+="\tnd"+Aclean;
+                result+="[label =\""+Ahora+"\"];\n";
+
+                rank+=" nd"+Aclean+";}\n";
+
+            }
+
+        }else{
+
+            Acleansig = csv::clean(actual->sig->horaInicio);
+            if(actual==col->primero){
+
+                result+="\tMatriz -> nd"+Aclean+"[constraint=false];\n";
+
+                result+="\tnd"+Aclean;
+                result+="[label =\""+Ahora+"\"];\n";
+
+                result+="\tnd"+Aclean;
+                result+=" -> ";
+                result+= "nd"+Acleansig;
+                result+=" -> ";
+                result+="nd"+Aclean+"[constraint=false];\n";
+
+                rank+="Matriz; nd"+Aclean+";";
+
+            }else{
+
+                result+="\tnd"+Aclean;
+                result+="[label =\""+Ahora+"\"];\n";
+
+                result+="\tnd"+Aclean;
+                result+=" -> ";
+                result+= "nd"+Acleansig;
+                result+=" -> ";
+                result+="nd"+Aclean+"[constraint=false];\n";
+
+                rank+=" nd"+Aclean+";";
+
+            }
+
+        }
+
+        actual =actual->sig;
+    }
+
+
+     result+=rank;
+     return result;
+}
+
+std::string matriz::txtCabeceraFila(){
+
+    std::string result="\n\n";
+    std::string edificio="";
+    std::string edificiosig="";
+    std::string no_salon ="";
+    std::string no_salonsig="";
+
+    NodoCabeceraFila* actual = fila->primero;
+
+    result+="\t//----------------------cabecera filas-----------------------\n";
+    while(actual != nullptr){
+
+        edificio =csv::ReplaceAll(actual->edificio,"-","") ;
+        no_salon = std::to_string(actual->salon->getValor().no_salon);
+
+        if(actual->abajo==nullptr){
+
+            if(actual==fila->primero){
+
+                result+="\tMatriz -> nd"+edificio+no_salon+"[constraint=true];\n";
+                result+="\tnd"+edificio+no_salon;
+                result+="[label =\""+edificio+"\\n"+no_salon+"\"];\n";
+
+
+            }else{
+
+                result+="\tnd"+edificio+no_salon;
+                result+="[label =\""+edificio+"\\n"+no_salon+"\"];\n";
+
+            }
+
+        }else{
+
+            edificiosig =csv::ReplaceAll(actual->abajo->edificio,"-","") ;
+            no_salonsig = std::to_string(actual->abajo->salon->getValor().no_salon);
+
+            if(actual==fila->primero){
+
+                result+="\tMatriz -> nd"+edificio+no_salon+"[constraint=true];\n";
+
+                result+="\tnd"+edificio+no_salon;
+                result+="[label =\""+edificio+"\\n"+no_salon+"\"];\n";
+
+                result+="\t nd"+edificio+no_salon;
+                result+=" -> ";
+                result+= "nd"+edificiosig+no_salonsig;
+                result+=" -> ";
+                result+="nd"+edificio+no_salon+"[constraint=true];\n";
+
+            }else{
+
+                result+="\tnd"+edificio+no_salon;
+                result+="[label =\""+edificio+"\\n"+no_salon+"\"];\n";
+
+                result+="\t nd"+edificio+no_salon;
+                result+=" -> ";
+                result+= "nd"+edificiosig+no_salonsig;
+                result+=" -> ";
+                result+="nd"+edificio+no_salon+"[constraint=true];\n";
+
+            }
+
+        }
+
+        actual =actual->abajo;
+    }
+
+
+
+    return result;
+}
+
+std::string matriz::txtFilas(){
+    std::string result = "";
+    std::string cabecera ="";
+    std::string nodo="";
+    std::string nodosig ="";
+    std::string horafinal="";
+    std::string cat ="";
+    std::string curso="";
+    std::string rank ="\t{ rank = same ;";
+
+
+
+    NodoCabeceraFila* actual = fila->primero;
+    NodoOrtogonal* aux ;
+
+    while(actual != nullptr){
+        rank ="\t{ rank = same ;";
+        cabecera ="nd";
+        cabecera +=csv::ReplaceAll(actual->edificio,"-","") ;
+        cabecera += std::to_string(actual->salon->getValor().no_salon);
+
+         result +="\t//---------------- FIla:"+cabecera+"--------------------------\n";
+
+        aux = actual->listHorizontal->primerolistaHorizontal;
+        while(aux!=nullptr)
+        {
+
+             nodo = "";
+             nodo += cabecera;
+             nodo += csv::clean(aux->getIndex().horaInicio);
+             horafinal = aux->getContenido().horaFinal;
+             cat = aux->getContenido().curso->getCatedratico()->getValor().nombre;
+             curso =aux->getContenido().curso->getValor().nombre;
+
+
+            if(aux->getder()==nullptr)
+            {
+                if(aux == actual->listHorizontal->primerolistaHorizontal){
+
+                    result+="\t"+cabecera+" -> "+nodo+"[constraint=false];\n";
+                    result+="\t"+nodo;
+                    result+="[label =\""+cat+"\\n"+curso+"\\n"+horafinal+"\"];\n";
+                    rank+= cabecera+"; "+nodo+";}\n";
+
+                }else{
+
+                    result+="\t"+nodo;
+                    result+="[label =\""+cat+"\\n"+curso+"\\n"+horafinal+"\"];\n";
+                    rank+= nodo+";}\n";
+
+                }
+
+
+            }else{
+
+                nodosig ="";
+                nodosig += cabecera;
+                nodosig += csv::clean(aux->getder()->getIndex().horaInicio);
+
+                if(aux == actual->listHorizontal->primerolistaHorizontal){
+
+
+                    result+="\t"+cabecera+" -> "+nodo+";\n";
+                    result+="\t"+nodo;
+                    result+="[label =\""+cat+"\\n"+curso+"\\n"+horafinal+"\"];\n";
+                    result+="\t"+nodo;
+                    result+=" -> ";
+                    result+= nodosig;
+                    result+=" -> ";
+                    result+=nodo+"[constraint=false];\n";
+
+                    rank+= cabecera+"; "+nodo+";";
+
+
+                }else{
+
+                    result+="\t"+nodo;
+                    result+="[label =\""+cat+"\\n"+curso+"\\n"+horafinal+"\"];\n";
+
+                    result+="\t"+nodo;
+                    result+=" -> ";
+                    result+= nodosig;
+                    result+=" -> ";
+                    result+=nodo+";\n";
+
+                    rank+= nodo+";";
+
+
+                }
+
+            }
+
+
+            aux= aux->getder();
+        }
+
+        result+= rank+"";
+        actual =actual->abajo;
+    }
+
+
+
+    return result;
+}
+
+
+std::string matriz::txtColumnas(){
+    std::string result = "";
+
+    std::string cabecera ="";
+    std::string nodo="";
+    std::string nodosig ="";
+
+
+
+
+    NodoCabeceraColumna* actual = col->primero;
+    NodoOrtogonal* aux ;
+
+    while(actual != nullptr){
+
+        cabecera ="";
+        cabecera +=csv::clean(actual->horaInicio);
+
+        aux = actual->listVertical->primerolistaVertical;
+         result +="\n\t//---------------- Col:"+cabecera+"--------------------------\n";
+        while(aux!=nullptr)
+        {
+             nodo = "";
+             nodo +=csv::ReplaceAll(aux->getIndex().edificio,"-","");
+             nodo +=std::to_string(aux->getIndex().salon->getValor().no_salon);
+             nodo += cabecera;
+
+
+
+            if(aux->getDown()==nullptr)
+            {
+                if(aux == actual->listVertical->primerolistaVertical){
+
+                    result+="\tnd"+cabecera+" -> nd"+nodo+"[constraint=true];\n";
+
+                }
+
+
+            }else{
+
+                nodosig ="";
+                nodosig +=csv::ReplaceAll(aux->getDown()->getIndex().edificio,"-","");
+                nodosig +=std::to_string(aux->getDown()->getIndex().salon->getValor().no_salon);
+                nodosig += cabecera;
+
+                if(aux == actual->listVertical->primerolistaVertical){
+
+
+                    result+="\t nd"+cabecera+" -> nd"+nodo+"[constraint=true];\n";
+                    result+="\tnd"+nodo;
+                    result+=" -> ";
+                    result+="nd"+nodosig;
+                    result+=" -> ";
+                    result+="nd"+nodo+"[constraint=true];\n";
+
+                }else{
+
+                    result+="\tnd"+nodo;
+                    result+=" -> ";
+                    result+="nd"+nodosig;
+                    result+=" -> ";
+                    result+="nd"+nodo+"[constraint=true];\n";
+
+
+
+                }
+
+            }
+
+
+            aux= aux->getDown();
+        }
+
+
+        actual =actual->sig;
+    }
+
+
+
+    return result;
+
+}
 
 
 

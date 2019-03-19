@@ -5,20 +5,10 @@
 #include <string>
 #include <listcursos.h>
 #include <listedificios.h>
+#include <csv.h>
 
 
-struct index{
 
-    std::string  horaInicio;
-    nodoSalon* salon;
-    std::string edificio;
-};
-
-struct contenido
-{
-    std::string horaFinal;
-    nodoCurso* curso;
-};
 
 struct stOrtogonal{
 
@@ -30,6 +20,22 @@ struct stOrtogonal{
 
 };
 
+struct xy{
+
+    std::string  horaInicio;
+    nodoSalon* salon;
+    std::string edificio;
+};
+
+
+
+struct contenido
+{
+    std::string horaFinal;
+    nodoCurso* curso;
+};
+
+
 
 
 //********************************************************************************
@@ -38,7 +44,7 @@ struct stOrtogonal{
 class NodoOrtogonal
 {
 private:
-    index indice;
+    xy indice;
     contenido cont;
 
     NodoOrtogonal* up;
@@ -46,12 +52,12 @@ private:
     NodoOrtogonal* izq;
     NodoOrtogonal* der;
 public:
-    NodoOrtogonal(index indice,contenido cont);
+    NodoOrtogonal(xy indice,contenido cont);
 
-    index      getIndex(){return indice;}
+    xy      getIndex(){return indice;}
     contenido  getContenido(){return cont;}
 
-    void setIndex(index indice){this->indice=indice;}
+    void setIndex(xy indice){this->indice=indice;}
     void setContenido(contenido cont){this->cont=cont;}
 
     NodoOrtogonal* getUp(){return up;}
@@ -170,7 +176,12 @@ public:
     ListaCabeceraColumna* col;
     std::string insertar(stOrtogonal datos,listCursos* cursos, listEdificios* edificios );
     void graficar();
-    void generarDot();
+    void generarDot(std::string nombre);
+    std::string txtCabeceraCol();
+    std::string txtCabeceraFila();
+
+    std::string txtFilas();
+    std::string txtColumnas();
 };
 
 #endif // MATRIZ_H
