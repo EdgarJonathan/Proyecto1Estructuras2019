@@ -5,6 +5,7 @@
 #include <string>
 #include <iostream>
 #include <bst.h>
+#include <sstream>
 
 
 class csv
@@ -19,7 +20,8 @@ public:
    static  std::string limpiarCadena(std::string cadena);
    static  int getnum(std::string hora);
    static  std::string clean(std::string hora);
-
+   static  int getNumDia(std::string dia);
+   static  void mayuscula(std::string &pal);
 
 };
 

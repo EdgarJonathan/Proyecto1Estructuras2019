@@ -84,6 +84,7 @@ std::list<catedratico> csv::obtenerCatedraticos(std::string entrada){
 
 
 int csv:: getnum(std::string hora){
+
     int number=0;
     std::istringstream iss ( ReplaceAll(hora,":","") );
     iss >> number;
@@ -98,7 +99,48 @@ std::string csv::clean(std::string hora){
 }
 
 
+int csv::getNumDia(std::string dia)
+{
+    int result =0;
+    mayuscula(dia);
 
+    if(dia=="LUNES")
+    {
+        result =1;
+    }else if(dia=="MARTES")
+    {
+        result =2;
+    }else if(dia=="MIERCOLES")
+    {
+        result =3;
+    }else if(dia=="JUEVES")
+    {
+        result =4;
+    }else if(dia=="VIERNES")
+    {
+        result =5;
+    }else if(dia=="SABADO")
+    {
+        result =6;
+    }else if(dia=="DOMINGO")
+    {
+        result =7;
+    }
+
+
+
+
+    return result;
+}
+
+
+void csv::mayuscula(std::string &pal)
+{
+    for (int i =0;i<pal.length();i++) {
+
+        pal[i]=towupper(pal[i]);
+    }
+}
 
 
 

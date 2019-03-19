@@ -196,16 +196,6 @@ std::string listCursos::subGrafoLista()
 
         if(actual==ultimo)
         {
-            /* lista+="\t\t\tnode"+actual->getValor().id
-                    +"[label=\" id_Curso: "+actual->getValor().id
-                    +"\\nCurso: "+actual->getValor().nombre
-                    +"\\nCatedratico: "+actual->getCatedratico()->getValor().nombre+"\"];\n";
-
-            lista+="\t\t\tnode"+actual->getValor().id;
-            lista+=" -> ";
-            lista+="node"+primero->getValor().id+";\n";
-
-            rank+="node"+actual->getValor().id+";};";*/
 
             lista+="\t\t\tnode"+actual->getValor().id
                     +"[label=\" id_Curso: "+actual->getValor().id

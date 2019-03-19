@@ -43,10 +43,7 @@ public:
     void setAnt(nodoSalon* n){ this->ant = n; }
 };
 
-struct salonEdificio{
-    std::string edificio;
-    nodoSalon* salon;
-};
+
 
 /*****************************************************************************
 *************************** listEdificios  ***********************************
@@ -94,6 +91,7 @@ public:
     listSalon*   getSalones(){return salones;}
     nodoEdificio* getSig(){ return sig; }
     nodoEdificio* getAnt(){ return ant; }
+    std::string getValor(){return edificio;}
     // operaciones de modificación
     void setSalones(listSalon* n){this->salones =n;}
     void setValor(std::string n){ this->edificio = n; }
@@ -101,9 +99,10 @@ public:
     void setAnt(nodoEdificio* n){ this->ant = n; }
 };
 
-
-
-
+struct salonEdificio{
+    nodoEdificio* edificio;
+    nodoSalon* salon;
+};
 
 /*****************************************************************************
 *************************** listEdificios  ***********************************

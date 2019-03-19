@@ -88,44 +88,6 @@ void ListaOrtogonal::ordenarListaHorizontal(NodoOrtogonal*  nuevo)
         }
     }
 
-    /*
-    NodoOrtogonal* actualFila = primerolistaHorizontal;
-    int nuevo_salon =nuevo->getIndex().salon->getValor().no_salon;
-
-    //si el nuevo es menor al primero
-    if(nuevo_salon<= primerolistaHorizontal->getIndex().salon->getValor().no_salon)
-    {
-        primerolistaHorizontal->setizq(nuevo);
-        nuevo->setder(primerolistaHorizontal);
-        nuevo->setizq(nullptr);
-        primerolistaHorizontal=nuevo;
-    }//si  es mayor o igual al ultimo
-    else if(nuevo_salon >= ultimolistaHorizontal->getIndex().salon->getValor().no_salon)
-    {
-        ultimolistaHorizontal->setder(nuevo);
-        nuevo->setizq(ultimolistaHorizontal);
-        nuevo->setder(nullptr);
-        ultimolistaHorizontal= nuevo;
-    }//recoriendo la lista si nuevo es mayor o igual actual
-    //y si nuevo es menor o igual siguiente de actual
-    else
-    {
-        while (actualFila!=ultimolistaHorizontal) {
-
-            if((nuevo_salon > actualFila->getIndex().salon->getValor().no_salon)
-               &&(nuevo_salon< actualFila->getder()->getIndex().salon->getValor().no_salon))
-            {
-                nuevo->setder(actualFila->getder());
-                nuevo->setizq(actualFila);
-                actualFila->getder()->setizq(nuevo);
-                actualFila->setder(nuevo);
-                break;
-            }
-
-            actualFila= actualFila->getder();
-        }
-    }
-*/
 }
 
 std::string ListaOrtogonal::insertarListaVertical(NodoOrtogonal* nuevo)
@@ -191,45 +153,6 @@ void ListaOrtogonal::ordenarListaVertical(NodoOrtogonal* nuevo)
         }
     }
 
-
-
-/*
-    NodoOrtogonal* actualCol = primerolistaVertical;
-
-    //si el nuevo es menor al primero
-    if(nuevo->getIndex().horaInicio <= primerolistaVertical->getIndex().horaInicio)
-    {
-        primerolistaVertical->setUp(nuevo);
-        nuevo->setDown(primerolistaVertical);
-        nuevo->setUp(nullptr);
-        primerolistaVertical=nuevo;
-    }//si  es mayor o igual al ultimo
-    else if(nuevo->getIndex().horaInicio>= ultimolistaVertical->getIndex().horaInicio)
-    {
-        ultimolistaVertical->setDown(nuevo);
-        nuevo->setUp(ultimolistaVertical);
-        nuevo->setDown(nullptr);
-        ultimolistaVertical= nuevo;
-    }//recoriendo la lista si nuevo es mayor o igual actual
-    //y si nuevo es menor o igual siguiente de actual
-    else
-    {
-        while (actualCol!=ultimolistaVertical) {
-
-            if((nuevo->getIndex().horaInicio >= actualCol->getIndex().horaInicio)
-                    &&(nuevo->getIndex().horaInicio<= actualCol->getDown()->getIndex().horaInicio))
-            {
-                nuevo->setDown(actualCol->getDown());
-                nuevo->setUp(actualCol);
-                actualCol->getDown()->setUp(nuevo);
-                actualCol->setDown(nuevo);
-                break;
-            }
-
-            actualCol= actualCol->getDown();
-        }
-    }
-*/
 }
 
 //********************************************************************************
@@ -260,7 +183,8 @@ std::string ListaCabeceraFila::insertar(NodoOrtogonal *nuevo)
 
     std::string respuesta="";
     int no_salon = nuevo->getIndex().salon->getValor().no_salon;
-    std::string edificio = nuevo->getIndex().edificio;
+    nodoEdificio* edificio = nuevo->getIndex().edificio;
+
     if(primero==nullptr)
     {
         NodoCabeceraFila* nuevoFila = new NodoCabeceraFila(nuevo);
@@ -293,13 +217,14 @@ std::string ListaCabeceraFila::insertar(NodoOrtogonal *nuevo)
     return respuesta;
 }
 
-NodoCabeceraFila* ListaCabeceraFila::buscarFila(std::string edificio,int salon)
+NodoCabeceraFila* ListaCabeceraFila::buscarFila(nodoEdificio* edificio,int salon)
 {
     NodoCabeceraFila* tmp = primero;
 
     while (tmp!=nullptr) {
-        if((tmp->edificio==edificio)&&
-                (tmp->salon->getValor().no_salon==salon)){
+        if((tmp->edificio->getValor()== edificio->getValor())&&
+           (tmp->salon->getValor().no_salon==salon))
+        {
             return tmp;
         }
         tmp = tmp->abajo;
@@ -313,7 +238,7 @@ void ListaCabeceraFila::ordenar(NodoCabeceraFila* nuevo)
     int nuevo_salon = nuevo->salon->getValor().no_salon;
 
     //si el nuevo es menor al primero
-    if(nuevo_salon < primero->salon->getValor().no_salon)
+    if(nuevo_salon <= primero->salon->getValor().no_salon)
     {
         primero->arriba=nuevo;
         nuevo->abajo = primero;
@@ -406,7 +331,6 @@ std::string ListaCabeceraColumna::insertar(NodoOrtogonal* nuevo){
 
 }
 
-
 NodoCabeceraColumna* ListaCabeceraColumna::buscarCol(std::string horaInicio){
 
     NodoCabeceraColumna* tmp = primero;
@@ -420,7 +344,6 @@ NodoCabeceraColumna* ListaCabeceraColumna::buscarCol(std::string horaInicio){
     return nullptr;
 
 }
-
 
 void ListaCabeceraColumna::ordenar(NodoCabeceraColumna* nuevo){
 
@@ -483,7 +406,7 @@ std::string  matriz::insertar(stOrtogonal datos,listCursos* cursos, listEdificio
     salonEdificio EdificioEncontrado = edificios->obtnerSalon(datos.edificio,datos.no_salon);
     nodoCurso* cursoEncontrado = cursos->buscarId(datos.idCurso);
 
-    if((EdificioEncontrado.salon!=nullptr)&&(cursoEncontrado!= nullptr))
+    if((EdificioEncontrado.salon!=nullptr)&&(cursoEncontrado!= nullptr)&&(EdificioEncontrado.edificio!=nullptr))
     {
         xy indice;
         indice.horaInicio=datos.horaInicio;
@@ -494,6 +417,7 @@ std::string  matriz::insertar(stOrtogonal datos,listCursos* cursos, listEdificio
         cont.curso = cursoEncontrado;
         NodoOrtogonal* nuevo = new NodoOrtogonal(indice,cont);
 
+        this->dia = datos.dia;
         respuesta +="{"+fila->insertar(nuevo)+"}";
         respuesta +="{"+col->insertar(nuevo)+"}";
 
@@ -508,7 +432,6 @@ std::string  matriz::insertar(stOrtogonal datos,listCursos* cursos, listEdificio
 
 }
 
-
 void matriz::graficar(){
     std::string nombre = "matriz";
     generarDot(nombre);
@@ -518,8 +441,6 @@ void matriz::graficar(){
     system("xdg-open matriz.dot.svg");
 
 }
-
-
 
 void matriz::generarDot(std::string nombre){
 
@@ -545,7 +466,6 @@ void matriz::generarDot(std::string nombre){
 
 }
 
-
 std::string matriz::txtCabeceraCol()
 {
     std::string result = "";
@@ -560,7 +480,7 @@ std::string matriz::txtCabeceraCol()
     result+="\t//----------------------cabecera columnas-----------------------\n";
     while(actual != nullptr){
 
-        Aclean = csv::clean(actual->horaInicio);
+        Aclean = dia+csv::clean(actual->horaInicio);
         Ahora = actual->horaInicio;
 
         if(actual->sig==nullptr){
@@ -568,10 +488,10 @@ std::string matriz::txtCabeceraCol()
             if(actual==col->primero){
 
 
-                result+="\tMatriz -> nd"+Aclean+"[constraint=false];\n";
+                result+="\t"+dia+" -> nd"+Aclean+"[constraint=false];\n";
                 result+="\tnd"+Aclean;
                 result+="[label =\""+Ahora+"\"];\n";
-                rank+="Matriz; nd"+Aclean+";}\n";
+                rank+= dia+"; nd"+Aclean+";}\n";
 
             }else{
 
@@ -585,10 +505,10 @@ std::string matriz::txtCabeceraCol()
 
         }else{
 
-            Acleansig = csv::clean(actual->sig->horaInicio);
+            Acleansig = dia+csv::clean(actual->sig->horaInicio);
             if(actual==col->primero){
 
-                result+="\tMatriz -> nd"+Aclean+"[constraint=false];\n";
+                result+="\t"+dia+" -> nd"+Aclean+"[constraint=false];\n";
 
                 result+="\tnd"+Aclean;
                 result+="[label =\""+Ahora+"\"];\n";
@@ -599,7 +519,7 @@ std::string matriz::txtCabeceraCol()
                 result+=" -> ";
                 result+="nd"+Aclean+"[constraint=false];\n";
 
-                rank+="Matriz; nd"+Aclean+";";
+                rank+= dia+"; nd"+Aclean+";";
 
             }else{
 
@@ -633,42 +553,45 @@ std::string matriz::txtCabeceraFila(){
     std::string edificiosig="";
     std::string no_salon ="";
     std::string no_salonsig="";
+    std::string edificioClean ="";
+    std::string edificioCleanSig ="";
 
     NodoCabeceraFila* actual = fila->primero;
 
     result+="\t//----------------------cabecera filas-----------------------\n";
     while(actual != nullptr){
 
-        edificio =csv::ReplaceAll(actual->edificio,"-","") ;
+        edificioClean =actual->edificio->getValor();
+        edificio = dia+csv::ReplaceAll(edificioClean,"-","") ;
         no_salon = std::to_string(actual->salon->getValor().no_salon);
 
         if(actual->abajo==nullptr){
 
             if(actual==fila->primero){
 
-                result+="\tMatriz -> nd"+edificio+no_salon+"[constraint=true];\n";
+                result+="\t"+dia+" -> nd"+edificio+no_salon+"[constraint=true];\n";
                 result+="\tnd"+edificio+no_salon;
-                result+="[label =\""+edificio+"\\n"+no_salon+"\"];\n";
+                result+="[label =\""+edificioClean+"\\n"+no_salon+"\"];\n";
 
 
             }else{
 
                 result+="\tnd"+edificio+no_salon;
-                result+="[label =\""+edificio+"\\n"+no_salon+"\"];\n";
+                result+="[label =\""+edificioClean+"\\n"+no_salon+"\"];\n";
 
             }
 
         }else{
-
-            edificiosig =csv::ReplaceAll(actual->abajo->edificio,"-","") ;
+            edificioCleanSig = actual->abajo->edificio->getValor();
+            edificiosig =dia+csv::ReplaceAll(edificioCleanSig,"-","") ;
             no_salonsig = std::to_string(actual->abajo->salon->getValor().no_salon);
 
             if(actual==fila->primero){
 
-                result+="\tMatriz -> nd"+edificio+no_salon+"[constraint=true];\n";
+                result+="\t"+dia+" -> nd"+edificio+no_salon+"[constraint=true];\n";
 
                 result+="\tnd"+edificio+no_salon;
-                result+="[label =\""+edificio+"\\n"+no_salon+"\"];\n";
+                result+="[label =\""+edificioClean+"\\n"+no_salon+"\"];\n";
 
                 result+="\t nd"+edificio+no_salon;
                 result+=" -> ";
@@ -679,7 +602,7 @@ std::string matriz::txtCabeceraFila(){
             }else{
 
                 result+="\tnd"+edificio+no_salon;
-                result+="[label =\""+edificio+"\\n"+no_salon+"\"];\n";
+                result+="[label =\""+edificioClean+"\\n"+no_salon+"\"];\n";
 
                 result+="\t nd"+edificio+no_salon;
                 result+=" -> ";
@@ -717,7 +640,7 @@ std::string matriz::txtFilas(){
     while(actual != nullptr){
         rank ="\t{ rank = same ;";
         cabecera ="nd";
-        cabecera +=csv::ReplaceAll(actual->edificio,"-","") ;
+        cabecera +=dia+csv::ReplaceAll(actual->edificio->getValor(),"-","") ;
         cabecera += std::to_string(actual->salon->getValor().no_salon);
 
          result +="\t//---------------- FIla:"+cabecera+"--------------------------\n";
@@ -804,7 +727,6 @@ std::string matriz::txtFilas(){
     return result;
 }
 
-
 std::string matriz::txtColumnas(){
     std::string result = "";
 
@@ -824,11 +746,11 @@ std::string matriz::txtColumnas(){
         cabecera +=csv::clean(actual->horaInicio);
 
         aux = actual->listVertical->primerolistaVertical;
-         result +="\n\t//---------------- Col:"+cabecera+"--------------------------\n";
+         result +="\n\t//---------------- Col:"+dia+cabecera+"--------------------------\n";
         while(aux!=nullptr)
         {
              nodo = "";
-             nodo +=csv::ReplaceAll(aux->getIndex().edificio,"-","");
+             nodo += dia+csv::ReplaceAll(aux->getIndex().edificio->getValor(),"-","");
              nodo +=std::to_string(aux->getIndex().salon->getValor().no_salon);
              nodo += cabecera;
 
@@ -838,7 +760,7 @@ std::string matriz::txtColumnas(){
             {
                 if(aux == actual->listVertical->primerolistaVertical){
 
-                    result+="\tnd"+cabecera+" -> nd"+nodo+"[constraint=true];\n";
+                    result+="\tnd"+dia+cabecera+" -> nd"+nodo+"[constraint=true];\n";
 
                 }
 
@@ -846,14 +768,14 @@ std::string matriz::txtColumnas(){
             }else{
 
                 nodosig ="";
-                nodosig +=csv::ReplaceAll(aux->getDown()->getIndex().edificio,"-","");
+                nodosig +=dia+csv::ReplaceAll(aux->getDown()->getIndex().edificio->getValor(),"-","");
                 nodosig +=std::to_string(aux->getDown()->getIndex().salon->getValor().no_salon);
                 nodosig += cabecera;
 
                 if(aux == actual->listVertical->primerolistaVertical){
 
 
-                    result+="\t nd"+cabecera+" -> nd"+nodo+"[constraint=true];\n";
+                    result+="\t nd"+dia+cabecera+" -> nd"+nodo+"[constraint=true];\n";
                     result+="\tnd"+nodo;
                     result+=" -> ";
                     result+="nd"+nodosig;
@@ -882,13 +804,30 @@ std::string matriz::txtColumnas(){
         actual =actual->sig;
     }
 
-
-
     return result;
-
 }
 
+std::string matriz::getDot()
+{
+    std::string result ="";
 
+    result += "//------------------------------------"+this->dia+"------------------------\n";
+    result += "subgraph cluster_"+this->dia+"\n";
+    result += "{\n";
+    result += "\tnodesep = 0.5;\n";
+    result += "\tnode[shape=box, color=turquoise4, fillcolor=green,style=filled ];\n";
+    result += "\tedge[color=tomato];\n";
+    result += "\trankdir=UD;\n";
+    result += txtCabeceraCol();
+    result += txtCabeceraFila();
+    result += txtFilas();
+    result += txtColumnas();
+    result += "\tcolor=blue;\t";
+    result += "\tlabel=\"Matriz del dia "+this->dia+"\"\n";
+    result += "\t}\n";
+
+    return result;
+}
 
 
 

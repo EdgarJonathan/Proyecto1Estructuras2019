@@ -3,7 +3,9 @@
 #include <listcursos.h>
 #include <listedificios.h>
 #include <matriz.h>
+#include <listasemana.h>
 #include <sstream>
+
 
 using namespace std;
 
@@ -41,10 +43,8 @@ int main()
   //miarbol->graficar();
   //misCusros->graficar(miarbol->obtenerdotGrafica());
 
-
   //-------------------------------lista edificios--------------------------------------------
    listEdificios* Edificios = new listEdificios();
-
     Edificios->insertar({5,8,"t-3"});
     Edificios->insertar({9,560,"t-4"});
     Edificios->insertar({6,98,"t-3"});
@@ -55,36 +55,20 @@ int main()
     Edificios->insertar({8,856,"t-4"});
 
    // Edificios->imprimirLista();
-
-    matriz* miMatriz = new matriz();
+    ListaSemana* milista = new  ListaSemana();
     stOrtogonal dato;
+    dato= {"lunes","7:00","8:30","t-4",3,"BS055"};
+    std::cout<<milista->insertar(dato,misCusros,Edificios)<<std::endl;
+    dato= {"martes","8:00","8:30","t-4",9,"BS060"};
+    std::cout<<milista->insertar(dato,misCusros,Edificios)<<std::endl;
+    dato= {"martes","5:00","6:30","t-3",6,"BS012"};
+    std::cout<<milista->insertar(dato,misCusros,Edificios)<<std::endl;
+    dato= {"jueves","7:00","7:30","t-2",3,"BS050"};
+    std::cout<<milista->insertar(dato,misCusros,Edificios)<<std::endl;
+    dato= {"jueves","6:00","7:30","t-4",3,"BS055"};
+    std::cout<<milista->insertar(dato,misCusros,Edificios)<<std::endl;
 
-
-    dato= {"7:00","7:30","t-4",3,"BS055"};
-    std::cout<<miMatriz->insertar(dato,misCusros,Edificios)<<std::endl;
-    dato= {"7:00","7:30","t-2",1,"BS060"};
-    std::cout<<miMatriz->insertar(dato,misCusros,Edificios)<<std::endl;
-    dato= {"10:00","11:30","t-3",5,"BS055"};
-    std::cout<<miMatriz->insertar(dato,misCusros,Edificios)<<std::endl;
-    dato= {"10:00","12:30","t-4",3,"BS045"};
-    std::cout<<miMatriz->insertar(dato,misCusros,Edificios)<<std::endl;
-    dato= {"10:00","12:30","t-4",8,"BS030"};
-    std::cout<<miMatriz->insertar(dato,misCusros,Edificios)<<std::endl;
-    dato= {"5:00","7:40","t-4",3,"BS012"};
-    std::cout<<miMatriz->insertar(dato,misCusros,Edificios)<<std::endl;
-    dato= {"4:00","5:40","t-4",8,"BS012"};
-    std::cout<<miMatriz->insertar(dato,misCusros,Edificios)<<std::endl;
-    dato= {"4:00","8:40","t-4",3,"BS070"};
-    std::cout<<miMatriz->insertar(dato,misCusros,Edificios)<<std::endl;
-    dato= {"7:00","8:40","t-4",8,"BS030"};
-    std::cout<<miMatriz->insertar(dato,misCusros,Edificios)<<std::endl;
-
-
-    miMatriz->graficar();
-
-
-
-
+    milista->graficar();
 
 
 

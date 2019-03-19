@@ -12,6 +12,7 @@
 
 struct stOrtogonal{
 
+    std::string dia;
     std::string  horaInicio;
     std::string horaFinal;
     std::string edificio;
@@ -24,7 +25,7 @@ struct xy{
 
     std::string  horaInicio;
     nodoSalon* salon;
-    std::string edificio;
+    nodoEdificio* edificio;
 };
 
 
@@ -104,7 +105,7 @@ public:
 
     NodoCabeceraFila(NodoOrtogonal* nuevo);
     nodoSalon* salon;
-    std::string edificio;
+    nodoEdificio* edificio;
     NodoCabeceraFila* arriba;
     NodoCabeceraFila*  abajo;
     ListaOrtogonal* listHorizontal;
@@ -126,7 +127,7 @@ public:
 
     std::string insertar(NodoOrtogonal* nuevo);
 private:
-    NodoCabeceraFila* buscarFila(std::string edificio,int salon);
+    NodoCabeceraFila* buscarFila(nodoEdificio* edificio,int salon);
     void ordenar(NodoCabeceraFila* nuevo);
 };
 
@@ -172,6 +173,7 @@ class matriz
 public:
 
     matriz();
+    std::string dia;
     ListaCabeceraFila* fila;
     ListaCabeceraColumna* col;
     std::string insertar(stOrtogonal datos,listCursos* cursos, listEdificios* edificios );
@@ -182,6 +184,8 @@ public:
 
     std::string txtFilas();
     std::string txtColumnas();
+
+    std::string getDot();
 };
 
 #endif // MATRIZ_H
