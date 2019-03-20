@@ -302,7 +302,7 @@ salonEdificio listEdificios::obtnerSalon(std::string edificio, int no_salon){
 
     nodoEdificio* actual =primero;
 
-    salonEdificio result = {nullptr,nullptr};
+    salonEdificio result =  salonEdificio();
 
     while(actual!=nullptr)
     {
@@ -314,7 +314,9 @@ salonEdificio listEdificios::obtnerSalon(std::string edificio, int no_salon){
 
                 if(actualSalon->getValor().no_salon == no_salon)
                 {
-                    result = {actual,actualSalon};
+                    result.salon = actualSalon;
+                    result.edificio= actual;
+
                     break;
                 }
 

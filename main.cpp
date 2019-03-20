@@ -57,9 +57,9 @@ int main()
    // Edificios->imprimirLista();
     ListaSemana* milista = new  ListaSemana();
     stOrtogonal dato;
-    dato= {"lunes","7:00","8:30","t-4",3,"BS055"};
+    dato= {"jueves","7:00","8:30","t-4",3,"BS055"};
     std::cout<<milista->insertar(dato,misCusros,Edificios)<<std::endl;
-    dato= {"martes","8:00","8:30","t-4",9,"BS060"};
+    dato= {"jueves","8:00","8:30","t-4",9,"BS060"};
     std::cout<<milista->insertar(dato,misCusros,Edificios)<<std::endl;
     dato= {"sabado","5:00","6:30","t-3",6,"BS012"};
     std::cout<<milista->insertar(dato,misCusros,Edificios)<<std::endl;

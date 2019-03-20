@@ -95,7 +95,15 @@ public:
     void setAnt(nodoEdificio* n){ this->ant = n; }
 };
 
-struct salonEdificio{
+/*struct salonEdificio{
+    nodoEdificio* edificio;
+    nodoSalon* salon;
+};*/
+
+class salonEdificio
+{
+public:
+    salonEdificio(){this->salon =nullptr; this->edificio = nullptr;}
     nodoEdificio* edificio;
     nodoSalon* salon;
 };

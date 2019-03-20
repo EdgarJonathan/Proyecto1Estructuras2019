@@ -11,21 +11,39 @@
 
 
 
-
+/*
 struct xy{
 
     std::string  horaInicio;
     nodoSalon* salon;
     nodoEdificio* edificio;
+};*/
+
+class xy
+{
+public:
+
+    xy() {this->salon=nullptr; this->edificio=nullptr;}
+    std::string  horaInicio;
+    nodoSalon* salon;
+    nodoEdificio* edificio;
+
 };
 
+class contenido
+{
+public:
+    contenido() {this->curso = nullptr;}
+    std::string horaFinal;
+    nodoCurso* curso;
+};
 
-
+/*
 struct contenido
 {
     std::string horaFinal;
     nodoCurso* curso;
-};
+};*/
 
 
 
