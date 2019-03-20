@@ -119,13 +119,13 @@ NodoSemana* ListaSemana::buscarDia(std::string dia)
 
 void ListaSemana::graficar(){
 
-    std::string nombre = "ListaDias";
+    std::string nombre = "/home/jonathan/Documentos/7S/EDD/proyecto1/matriz/Graficas/ListaDias";
     enlaces ="";
     generarDot(nombre);
 
     //especificar el nomabre en los metodos system
-    system("dot -Tsvg -O ListaDias.dot");
-    system("xdg-open ListaDias.dot.svg");
+    system("dot -Tsvg -O /home/jonathan/Documentos/7S/EDD/proyecto1/matriz/Graficas/ListaDias.dot");
+  //  system("xdg-open ListaDias.dot.svg");
 
 }
 

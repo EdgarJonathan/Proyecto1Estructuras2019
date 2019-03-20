@@ -19,4 +19,5 @@ HEADERS += \
     matriz.h \
     listedificios.h \
     csv.h \
-    listasemana.h
+    listasemana.h \
+    variables.h

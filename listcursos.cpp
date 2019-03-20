@@ -7,9 +7,12 @@
 ******************************************************************************/
 nodoCurso::nodoCurso(Curso curso, bst* arbol)
 {
-    nodoBst* cat = arbol->buscarId(curso.idCatedratico);
-
-    this->setCatedratico(cat);
+    if(arbol!=nullptr){
+        nodoBst* cat = arbol->buscarId(curso.idCatedratico);
+        this->setCatedratico(cat);
+    }else{
+        this->setCatedratico(nullptr);
+    }
     this->curso=curso;
     this->setSig(nullptr);
 }
@@ -43,6 +46,58 @@ nodoCurso* listCursos::buscarId(std::string d)
     return nullptr;
 }
 
+void listCursos::editarCurso(editCurso curso)
+{
+    nodoCurso* aux = buscarId(curso.id);
+    Curso cursoEncontrado;
+
+    if(aux!=nullptr)
+    {
+        cursoEncontrado.id =aux->getValor().id;
+        cursoEncontrado.nombre =curso.nombre;
+        cursoEncontrado.idCatedratico = aux->getValor().idCatedratico;
+        aux->setValor(cursoEncontrado);
+
+    }
+}
+
+
+std::string listCursos::insertarLista(std::list<Curso> ListaCurso,bst* arbol)
+{
+    std::string result;
+
+    for( auto it = ListaCurso.begin(); it != ListaCurso.end(); ++it )
+    {
+        Curso aux = *it;
+        insertar(aux,arbol);
+    }
+
+    return result;
+}
+
+std::list<Curso> listCursos::getCursos()
+{
+    std::list<Curso> cursos;
+     nodoCurso* tmp = primero;
+
+    if(primero!=nullptr)
+    {
+        do {
+            cursos.push_back(tmp->getValor());
+            tmp = tmp->getSig();
+        }while (tmp!=primero);
+
+
+    }
+    else
+    {
+        cursos.push_back({"NULL","NULL","NULL"});
+    }
+
+
+
+    return cursos;
+}
 
 std::string listCursos::insertar(Curso curso,bst* arbol)
 {
@@ -135,12 +190,13 @@ void listCursos::imprimirLista()
 void listCursos::graficar(std::string dotArbol){
 
     dotEnlacesListaArbol="";
-    std::string nombre = "lista";
+    std::string nombre = "/home/jonathan/Documentos/7S/EDD/proyecto1/matriz/Graficas/lista";
     generarDot(nombre,dotArbol);
 
     //especificar el nomabre en los metodos system
-    system("dot -Tsvg -O lista.dot");
-    system("xdg-open lista.dot.svg");
+     system("dot -Tsvg -O /home/jonathan/Documentos/7S/EDD/proyecto1/matriz/Graficas/lista.dot");
+    //system("dot -Tsvg -O lista.dot");
+   // system("xdg-open lista.dot.svg");
 
 }
 

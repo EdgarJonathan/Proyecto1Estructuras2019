@@ -156,6 +156,23 @@ listEdificios::listEdificios(){
     ultimo  = nullptr;
 }
 
+std::string listEdificios::insertarLista(std::list<EdificioString> lista)
+{
+    std::string result="false";
+    building aux;
+
+    for( auto it = lista.begin(); it != lista.end(); ++it )
+    {
+           aux.edificio =  (*it).edificio;
+           aux.no_salon = csv::to_int((*it).no_salon);
+           aux.capacidad = csv::to_int((*it).capacidad);
+           insertar(aux);
+    }
+    result ="true";
+    return result;
+}
+
+
 std::string listEdificios::insertar(building edificio){
 
     nodoEdificio* nuevo = new nodoEdificio(edificio.edificio);
@@ -222,7 +239,6 @@ void listEdificios::ordenarLista(nodoEdificio* nuevo){
 
 }
 
-
 nodoEdificio* listEdificios::buscarId(std::string edificio){
 
     nodoEdificio* tmp = primero;
@@ -236,17 +252,28 @@ nodoEdificio* listEdificios::buscarId(std::string edificio){
     return  nullptr;
 }
 
-std::list<std::string> listEdificios::linealizar(){
+std::list<EdificioString> listEdificios::linealizar(){
 
-    std::list<std::string> lista;
+    std::list<EdificioString> lista;
+    EdificioString  edificio;
     nodoEdificio* tmp = primero;
     while (tmp != nullptr) {
-        lista.push_back(tmp->getEdificioString());
+
+        nodoSalon* aux =tmp->getSalones()->primero;
+        while (aux!=nullptr) {
+            edificio.edificio = tmp->getValor();
+            edificio.no_salon = std::to_string(aux->getValor().no_salon);
+            edificio.capacidad = std::to_string(aux->getValor().capacidad);
+
+            lista.push_back(edificio);
+            aux= aux->getSig();
+        }
+
+
         tmp = tmp->getSig();
     }
     return lista;
 }
-
 
 void listEdificios::imprimirLista(){
 
@@ -304,8 +331,6 @@ salonEdificio listEdificios::obtnerSalon(std::string edificio, int no_salon){
       return result;
 
 }
-
-
 
 
 

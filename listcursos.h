@@ -2,7 +2,8 @@
 #define LISTCURSOS_H
 #include<string>
 #include<bst.h>
-using namespace std;
+#include <variables.h>
+
 
 /*****************************************************************************
 ***************************     Nodo list ************************************
@@ -53,9 +54,12 @@ public:
     nodoCurso* primero;
     nodoCurso* ultimo;
     std::string insertar(Curso curso,bst* arbol);
+    std::string insertarLista(std::list<Curso> ListaCurso, bst* arbol);
     void imprimirLista();
     void graficar(std::string dotArbol);
     nodoCurso* buscarId(std::string d);
+    void editarCurso(editCurso curso);
+    std::list<Curso> getCursos();
 
 private:
       std::string dotEnlacesListaArbol="";

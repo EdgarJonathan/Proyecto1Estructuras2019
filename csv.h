@@ -22,6 +22,7 @@ public:
    static  std::string clean(std::string hora);
    static  int getNumDia(std::string dia);
    static  void mayuscula(std::string &pal);
+   static  int to_int(const std::string &cadena);
 
 };
 

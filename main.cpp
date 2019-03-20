@@ -40,11 +40,11 @@ int main()
   misCusros->insertar({"BS055","Electrica","AX31"},miarbol);
 
   //misCusros->imprimirLista();
-  //miarbol->graficar();
-  //misCusros->graficar(miarbol->obtenerdotGrafica());
+ // miarbol->graficar();
+ // misCusros->graficar(miarbol->obtenerdotGrafica());
 
   //-------------------------------lista edificios--------------------------------------------
-   listEdificios* Edificios = new listEdificios();
+    listEdificios* Edificios = new listEdificios();
     Edificios->insertar({5,8,"t-3"});
     Edificios->insertar({9,560,"t-4"});
     Edificios->insertar({6,98,"t-3"});
@@ -61,16 +61,14 @@ int main()
     std::cout<<milista->insertar(dato,misCusros,Edificios)<<std::endl;
     dato= {"martes","8:00","8:30","t-4",9,"BS060"};
     std::cout<<milista->insertar(dato,misCusros,Edificios)<<std::endl;
-    dato= {"martes","5:00","6:30","t-3",6,"BS012"};
+    dato= {"sabado","5:00","6:30","t-3",6,"BS012"};
     std::cout<<milista->insertar(dato,misCusros,Edificios)<<std::endl;
-    dato= {"jueves","7:00","7:30","t-2",3,"BS050"};
+    dato= {"sabado","7:00","7:30","t-2",3,"BS050"};
     std::cout<<milista->insertar(dato,misCusros,Edificios)<<std::endl;
-    dato= {"jueves","6:00","7:30","t-4",3,"BS055"};
+    dato= {"sabado","6:00","7:30","t-4",3,"BS055"};
     std::cout<<milista->insertar(dato,misCusros,Edificios)<<std::endl;
 
     milista->graficar();
-
-
 
     return 0;
 

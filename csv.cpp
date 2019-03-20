@@ -136,7 +136,7 @@ int csv::getNumDia(std::string dia)
 
 void csv::mayuscula(std::string &pal)
 {
-    for (int i =0;i<pal.length();i++) {
+    for (unsigned int i =0;i<pal.length();i++) {
 
         pal[i]=towupper(pal[i]);
     }
@@ -145,7 +145,15 @@ void csv::mayuscula(std::string &pal)
 
 
 
+int csv::to_int(const std::string &cadena)
+{
+    int number=0;
+    std::istringstream iss (cadena);
+    iss >> number;
 
+    return number;
+
+}
 
 
 

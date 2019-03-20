@@ -192,12 +192,12 @@ void bst::postorden(nodoBst* r)
 
 void bst::graficar()
 {
-    std::string nombre = "arbolBst";
+    std::string nombre = "/home/jonathan/Documentos/7S/EDD/proyecto1/matriz/Graficas/arbolBst";
     textoDot(nombre);
 
     //especificar el nomabre en los metodos system
-    system("dot -Tsvg -O arbolBst.dot");
-    system("xdg-open arbolBst.dot.svg");
+    system("dot -Tpng -O /home/jonathan/Documentos/7S/EDD/proyecto1/matriz/Graficas/arbolBst.dot");
+   // system("xdg-open arbolBst.dot.svg");
 }
 
 void bst::textoDot(std::string nombre)

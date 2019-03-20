@@ -2,13 +2,9 @@
 #define LISTEDIFICIOS_H
 #include <string>
 #include <list>
+#include <variables.h>
+#include <csv.h>
 
-struct building
-{
-    int no_salon;
-    int capacidad;
-    std::string edificio;
-};
 
 
 /*****************************************************************************
@@ -121,8 +117,9 @@ public:
     nodoEdificio* primero;
     nodoEdificio* ultimo;
 
+    std::string insertarLista(std::list<EdificioString> lista);
     std::string insertar(building edificio);
-    std::list<std::string> linealizar();
+    std::list<EdificioString> linealizar();
     void imprimirLista();
     salonEdificio obtnerSalon(std::string edificio, int no_salon);
 

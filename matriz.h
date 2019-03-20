@@ -10,16 +10,7 @@
 
 
 
-struct stOrtogonal{
 
-    std::string dia;
-    std::string  horaInicio;
-    std::string horaFinal;
-    std::string edificio;
-    int no_salon;
-    std::string idCurso;
-
-};
 
 struct xy{
 
