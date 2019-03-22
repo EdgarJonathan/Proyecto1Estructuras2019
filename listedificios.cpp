@@ -335,7 +335,25 @@ salonEdificio listEdificios::obtnerSalon(std::string edificio, int no_salon){
 }
 
 
+std::list<Edificio> listEdificios::getEdificios()
+{
+    std::list<Edificio> lista;
 
+    nodoEdificio* temp = primero;
+
+    while(temp!=nullptr)
+    {
+        Edificio aux ;
+        aux.nombre = temp->getValor();
+        aux.salones = temp->getSalones()->linealizar();
+
+        lista.push_back(aux);
+        temp = temp->getSig();
+    }
+
+
+    return lista;
+}
 
 
 

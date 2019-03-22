@@ -12,10 +12,7 @@
 ******************************************************************************
 ******************************************************************************
 ******************************************************************************/
-struct Salon{
-  int no_salon;
-  int capacidad;
-};
+
 
 class nodoSalon
 {
@@ -127,6 +124,7 @@ public:
 
     std::string insertarLista(std::list<EdificioString> lista);
     std::string insertar(building edificio);
+    std::list<Edificio> getEdificios();
     std::list<EdificioString> linealizar();
     void imprimirLista();
     salonEdificio obtnerSalon(std::string edificio, int no_salon);

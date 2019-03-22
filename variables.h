@@ -1,6 +1,12 @@
 #ifndef VARIABLES_H
 #define VARIABLES_H
 #include <iostream>
+#include <list>
+
+struct Salon{
+  int no_salon;
+  int capacidad;
+};
 
 struct building
 {
@@ -33,5 +39,13 @@ struct EdificioString
     std::string capacidad;
 
 };
+
+struct Edificio
+{
+    std::string nombre;
+
+    std::list<Salon> salones;
+};
+
 
 #endif // VARIABLES_H
